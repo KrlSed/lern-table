@@ -1,16 +1,10 @@
-package com.sedliarov.learningtable.dto;
+package com.sedliarov.learningtable.model.dto;
 
-import com.sedliarov.learningtable.model.Student;
-import com.sedliarov.learningtable.model.Teacher;
+import com.sedliarov.learningtable.model.entity.Student;
+import com.sedliarov.learningtable.model.entity.Teacher;
 
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class GroupDto implements Serializable {
 
@@ -22,7 +16,8 @@ public class GroupDto implements Serializable {
 
     private List<Student> studentList;
 
-    public GroupDto(){}
+    public GroupDto() {
+    }
 
     public GroupDto(int id, String name, Teacher teacher, List<Student> studentList) {
         this.id = id;

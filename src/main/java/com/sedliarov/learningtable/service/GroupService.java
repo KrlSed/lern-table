@@ -1,22 +1,18 @@
 package com.sedliarov.learningtable.service;
 
-import com.sedliarov.learningtable.dto.GroupDto;
-import com.sedliarov.learningtable.model.Group;
+import com.sedliarov.learningtable.model.dto.GroupDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface GroupService {
 
     GroupDto addGroup(GroupDto groupDto);
 
-    GroupDto saveGroup(UUID id, GroupDto groupDto);
+    GroupDto updateGroup(GroupDto groupDto);
 
-    void deleteGroup(UUID id);
+    void deleteGroup(int id);
 
-    GroupDto getGroupById(UUID id);
+    GroupDto getGroupById(int id);
 
     List<GroupDto> getAllGroup();
-
-    List<GroupDto> sortedByNote();
 }

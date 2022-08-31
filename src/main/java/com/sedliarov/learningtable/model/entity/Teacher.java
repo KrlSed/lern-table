@@ -1,4 +1,4 @@
-package com.sedliarov.learningtable.model;
+package com.sedliarov.learningtable.model.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -9,14 +9,13 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student{
+public class Teacher{
 
     @Id
     @GeneratedValue
@@ -26,5 +25,6 @@ public class Student{
 
     private String secondName;
 
-    private Double note;
+    private boolean isAdmin;
+
 }

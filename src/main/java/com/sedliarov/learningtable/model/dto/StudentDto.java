@@ -1,4 +1,4 @@
-package com.sedliarov.learningtable.dto;
+package com.sedliarov.learningtable.model.dto;
 
 
 import java.io.Serializable;

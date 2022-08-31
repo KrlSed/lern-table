@@ -1,8 +1,7 @@
 package com.sedliarov.learningtable.controller;
 
-import com.sedliarov.learningtable.model.Student;
-import com.sedliarov.learningtable.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sedliarov.learningtable.model.dto.StudentDto;
+import com.sedliarov.learningtable.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,39 +9,31 @@ import java.util.List;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    @Autowired
-    private StudentRepository repository;
+    private StudentService service;
 
     @PostMapping
-    public Student addStudent(@RequestBody Student student)
-    {
-        return repository.save(student);
+    public StudentDto addStudent(@RequestBody StudentDto studentDto) {
+        return service.addStudent(studentDto);
     }
 
-    @GetMapping()
-    public List<Student> getStudents() {return repository.findAll();}
+    @GetMapping
+    public List<StudentDto> getStudents() {
+        return service.getAllStudent();
+    }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@RequestBody Student newStudent, @PathVariable int id) {
-        return repository.findById(id)
-                .map(student -> {
-                    student.setFirstName(newStudent.getFirstName());
-                    student.setSecondName(newStudent.getSecondName());
-                    student.setNote(newStudent.getNote());
-                    return repository.save(student);
-                })
-                .orElseGet(() -> {
-                    newStudent.setId(id);
-                    return repository.save(newStudent);
-                });
+    public StudentDto updateStudent(@RequestBody StudentDto studentDto) {
+        return service.updateStudent(studentDto);
     }
 
     @GetMapping("/{id}")
-    public Student getStudent(@PathVariable int id) {return repository.findById(id).orElseThrow();}
+    public StudentDto getStudent(@PathVariable int id) {
+        return service.getStudentById(id);
+    }
 
     @DeleteMapping("/{id}")
     public String deleteStudent(@PathVariable int id) {
-        repository.deleteById(id);
-        return "Student has been deleted";
+        service.deleteStudent(id);
+        return "Student " + id + " has been deleted";
     }
 }
