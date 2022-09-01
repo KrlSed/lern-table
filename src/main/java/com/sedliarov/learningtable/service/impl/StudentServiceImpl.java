@@ -1,19 +1,23 @@
 package com.sedliarov.learningtable.service.impl;
 
-import com.sedliarov.learningtable.model.dto.StudentDto;
 import com.sedliarov.learningtable.mapper.StudentMapper;
+import com.sedliarov.learningtable.model.dto.StudentDto;
 import com.sedliarov.learningtable.model.entity.Student;
 import com.sedliarov.learningtable.repository.StudentRepository;
 import com.sedliarov.learningtable.service.StudentService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    private StudentRepository repository;
+    private final StudentRepository repository;
 
-    private StudentMapper mapper;
+    private final StudentMapper mapper = StudentMapper.INSTANCE;
 
     @Override
     public StudentDto addStudent(StudentDto StudentDto) {

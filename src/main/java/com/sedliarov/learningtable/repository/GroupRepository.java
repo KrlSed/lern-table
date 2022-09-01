@@ -4,5 +4,5 @@ import com.sedliarov.learningtable.model.entity.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface GroupRepository extends JpaRepository<Group, Integer> {
+public interface GroupRepository extends JpaRepository<Group, Integer>{
 }

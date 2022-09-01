@@ -5,15 +5,19 @@ import com.sedliarov.learningtable.mapper.GroupMapper;
 import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.repository.GroupRepository;
 import com.sedliarov.learningtable.service.GroupService;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@AllArgsConstructor
 public class GroupServiceImpl implements GroupService {
 
-    private GroupRepository repository;
+    private final GroupRepository repository;
 
-    private GroupMapper mapper;
+    private final GroupMapper mapper = GroupMapper.INSTANCE;
 
     @Override
     public GroupDto addGroup(GroupDto groupDto) {
