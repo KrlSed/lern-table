@@ -9,8 +9,8 @@ import org.mapstruct.factory.Mappers;
 public interface TeacherMapper {
     TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);
 
-    Teacher dtoToTeacher(TeacherDto teacherDto);
+    Teacher dtoToEntity(TeacherDto teacherDto);
 
-    TeacherDto teacherToDto(Teacher teacher);
+    TeacherDto entityToDto(Teacher teacher);
 }
 

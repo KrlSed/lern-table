@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 public interface GroupMapper {
     GroupMapper INSTANCE = Mappers.getMapper(GroupMapper.class);
 
-    Group dtoToGroup(GroupDto groupDto);
+    Group dtoToEntity(GroupDto groupDto);
 
-    GroupDto groupToDto(Group group);
+    GroupDto entityToDto(Group group);
 }

@@ -8,8 +8,9 @@ import com.sedliarov.learningtable.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -20,44 +21,33 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper mapper = StudentMapper.INSTANCE;
 
     @Override
-    public StudentDto addStudent(StudentDto StudentDto) {
-        try {
-            Student dtoToStudent = mapper.dtoToStudent(StudentDto);
-            Student student = repository.save(dtoToStudent);
-            return mapper.studentToDto(student);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    public StudentDto addStudent(StudentDto studentDto) {
+        Student studentToSave= mapper.dtoToEntity(studentDto);
+        return mapper.entityToDto(repository.save(studentToSave));
     }
 
     @Override
-    public StudentDto updateStudent(StudentDto studentDto) {
-        return mapper.studentToDto(repository.findById(studentDto.getId()).map(student -> {
-            student.setFirstName(studentDto.getFirstName());
-            student.setSecondName(studentDto.getSecondName());
-            student.setNote(studentDto.getNote());
-            return repository.save(student);
-        }).orElseGet(() -> {
-            studentDto.setId(studentDto.getId());
-            return repository.save(mapper.dtoToStudent(studentDto));
-        }));
+    public StudentDto updateStudent(UUID id, StudentDto studentDto) {
+        repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id));
+
+        Student studentToUpdate = mapper.dtoToEntity(studentDto);
+        studentToUpdate.setId(id);
+        return mapper.entityToDto(repository.save(studentToUpdate));
     }
 
     @Override
-    public void deleteStudent(int id) {
+    public void deleteStudent(UUID id) {
         repository.deleteById(id);
     }
 
     @Override
-    public StudentDto getStudentById(int id) {
-        return mapper.studentToDto(repository.findById(id).orElseThrow(RuntimeException::new));
+    public StudentDto getStudentById(UUID id) {
+        return mapper.entityToDto(repository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
     public List<StudentDto> getAllStudent() {
-        List<Student> Students = (List<Student>) repository.findAll();
-        return Students.stream().map(mapper::studentToDto).collect(Collectors.toList());
+        return repository.findAll().stream().map(mapper::entityToDto).toList();
     }
 
 }

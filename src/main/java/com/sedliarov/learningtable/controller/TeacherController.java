@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.util.List;
 public class TeacherController {
     private final TeacherService service;
 
-    @PostMapping
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public TeacherDto addTeacher(@RequestBody TeacherDto teacherDto) {
         return service.addTeacher(teacherDto);
@@ -27,20 +28,20 @@ public class TeacherController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public TeacherDto updateTeacher(@RequestBody TeacherDto teacherDto) {
-        return service.updateTeacher(teacherDto);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public TeacherDto updateTeacher(@PathVariable UUID id, @RequestBody TeacherDto teacherDto) {
+        return service.updateTeacher(id, teacherDto);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TeacherDto getTeacher(@PathVariable int id) {
+    public TeacherDto getTeacher(@PathVariable UUID id) {
         return service.getTeacherById(id);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteTeacher(@PathVariable int id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteTeacher(@PathVariable UUID id) {
         service.deleteTeacher(id);
         return "Teacher " + id + " has been deleted";
     }

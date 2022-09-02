@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -27,20 +28,20 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public StudentDto updateStudent(@RequestBody StudentDto studentDto) {
-        return service.updateStudent(studentDto);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public StudentDto updateStudent(@PathVariable UUID id, @RequestBody StudentDto studentDto) {
+        return service.updateStudent(id, studentDto);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public StudentDto getStudent(@PathVariable int id) {
+    public StudentDto getStudent(@PathVariable UUID id) {
         return service.getStudentById(id);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteStudent(@PathVariable int id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteStudent(@PathVariable UUID id) {
         service.deleteStudent(id);
         return "Student " + id + " has been deleted";
     }

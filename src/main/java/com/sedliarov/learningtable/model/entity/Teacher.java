@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Table(name = "teahers")
@@ -21,7 +22,7 @@ public class Teacher{
 
     @Id
     @GeneratedValue
-    private int id;
+    private UUID id;
 
     private String firstName;
 

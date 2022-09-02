@@ -3,15 +3,16 @@ package com.sedliarov.learningtable.service;
 import com.sedliarov.learningtable.model.dto.TeacherDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface TeacherService {
     TeacherDto addTeacher(TeacherDto TeacherDto);
 
-    TeacherDto updateTeacher(TeacherDto TeacherDto);
+    TeacherDto updateTeacher(UUID id, TeacherDto TeacherDto);
 
-    void deleteTeacher(int id);
+    void deleteTeacher(UUID id);
 
-    TeacherDto getTeacherById(int id);
+    TeacherDto getTeacherById(UUID id);
 
     List<TeacherDto> getAllTeacher();
 }

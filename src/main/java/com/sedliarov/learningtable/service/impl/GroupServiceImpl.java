@@ -1,15 +1,16 @@
 package com.sedliarov.learningtable.service.impl;
 
-import com.sedliarov.learningtable.model.dto.GroupDto;
 import com.sedliarov.learningtable.mapper.GroupMapper;
+import com.sedliarov.learningtable.model.dto.GroupDto;
 import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.repository.GroupRepository;
 import com.sedliarov.learningtable.service.GroupService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -21,43 +22,32 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupDto addGroup(GroupDto groupDto) {
-        try {
-            Group dtoToGroup = mapper.dtoToGroup(groupDto);
-            Group group = repository.save(dtoToGroup);
-            return mapper.groupToDto(group);
-        }catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        Group groupToSave= mapper.dtoToEntity(groupDto);
+        return mapper.entityToDto(repository.save(groupToSave));
     }
 
     @Override
-    public GroupDto updateGroup(GroupDto groupDto) {
-        return mapper.groupToDto(repository.findById(groupDto.getId()).map(group -> {
-            group.setName(groupDto.getName());
-            group.setTeacher(groupDto.getTeacher());
-            group.setStudentList(groupDto.getStudentList());
-            return repository.save(group);
-        }).orElseGet(() -> {
-            groupDto.setId(groupDto.getId());
-            return repository.save(mapper.dtoToGroup(groupDto));
-        }));
+    public GroupDto updateGroup(UUID id, GroupDto groupDto) {
+        repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id));
+
+        Group groupToUpdate = mapper.dtoToEntity(groupDto);
+        groupToUpdate.setId(id);
+        return mapper.entityToDto(repository.save(groupToUpdate));
     }
 
     @Override
-    public void deleteGroup(int id) {
+    public void deleteGroup(UUID id) {
         repository.deleteById(id);
     }
 
     @Override
-    public GroupDto getGroupById(int id) {
-        return mapper.groupToDto(repository.findById(id).orElseThrow(RuntimeException::new));
+    public GroupDto getGroupById(UUID id) {
+        return mapper.entityToDto(repository.findById(id).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
     public List<GroupDto> getAllGroup() {
-        List<Group> groups = (List<Group>) repository.findAll();
-        return groups.stream().map(mapper::groupToDto).collect(Collectors.toList());
+        return repository.findAll().stream().map(mapper::entityToDto).toList();
     }
 
 }

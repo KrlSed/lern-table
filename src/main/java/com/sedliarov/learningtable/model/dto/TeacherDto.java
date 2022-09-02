@@ -3,11 +3,12 @@ package com.sedliarov.learningtable.model.dto;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 @Data
 public class TeacherDto implements Serializable {
 
-    private int id;
+    private UUID id;
 
     private String firstName;
 

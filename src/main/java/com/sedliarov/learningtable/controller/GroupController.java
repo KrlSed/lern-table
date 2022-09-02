@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.util.List;
 public class GroupController {
     private final GroupService service;
 
-    @PostMapping
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public GroupDto addGroup(@RequestBody GroupDto groupDto) {
         return service.addGroup(groupDto);
@@ -27,20 +28,20 @@ public class GroupController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public GroupDto updateGroup(@RequestBody GroupDto groupDto) {
-        return service.updateGroup(groupDto);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public GroupDto updateGroup(@PathVariable UUID id, @RequestBody GroupDto groupDto) {
+        return service.updateGroup(id, groupDto);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GroupDto getGroup(@PathVariable int id) {
+    public GroupDto getGroup(@PathVariable UUID id) {
         return service.getGroupById(id);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String deleteGroup(@PathVariable int id) {
+    @ResponseStatus(HttpStatus.OK)
+    public String deleteGroup(@PathVariable UUID id) {
         service.deleteGroup(id);
         return "Group " + id + " has been deleted";
     }

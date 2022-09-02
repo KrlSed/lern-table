@@ -6,11 +6,12 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class GroupDto implements Serializable {
 
-    private int id;
+    private UUID id;
 
     private String name;
 
