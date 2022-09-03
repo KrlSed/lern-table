@@ -21,7 +21,7 @@ public class GroupServiceImpl implements GroupService {
     private final GroupMapper mapper = GroupMapper.INSTANCE;
 
     @Override
-    public GroupDto addGroup(GroupDto groupDto) {
+    public GroupDto createGroup(GroupDto groupDto) {
         Group groupToSave= mapper.dtoToEntity(groupDto);
         return mapper.entityToDto(repository.save(groupToSave));
     }
@@ -31,7 +31,7 @@ public class GroupServiceImpl implements GroupService {
         repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id));
 
         Group groupToUpdate = mapper.dtoToEntity(groupDto);
-        groupToUpdate.setId(id);
+        groupToUpdate.setGroupId(id);
         return mapper.entityToDto(repository.save(groupToUpdate));
     }
 
@@ -42,11 +42,12 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public GroupDto getGroupById(UUID id) {
-        return mapper.entityToDto(repository.findById(id).orElseThrow(EntityNotFoundException::new));
+        return mapper.entityToDto(repository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id)));
     }
 
     @Override
-    public List<GroupDto> getAllGroup() {
+    public List<GroupDto> getGroups() {
         return repository.findAll().stream().map(mapper::entityToDto).toList();
     }
 

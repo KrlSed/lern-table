@@ -21,7 +21,7 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper mapper = TeacherMapper.INSTANCE;
 
     @Override
-    public TeacherDto addTeacher(TeacherDto teacherDto) {
+    public TeacherDto createTeacher(TeacherDto teacherDto) {
         Teacher teacherToSave= mapper.dtoToEntity(teacherDto);
         return mapper.entityToDto(repository.save(teacherToSave));
     }
@@ -31,7 +31,7 @@ public class TeacherServiceImpl implements TeacherService {
         repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id));
 
         Teacher teacherToUpdate = mapper.dtoToEntity(teacherDto);
-        teacherToUpdate.setId(id);
+        teacherToUpdate.setTeacherId(id);
         return mapper.entityToDto(repository.save(teacherToUpdate));
     }
 
@@ -42,11 +42,12 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDto getTeacherById(UUID id) {
-        return mapper.entityToDto(repository.findById(id).orElseThrow(EntityNotFoundException::new));
+        return mapper.entityToDto(repository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id)));
     }
 
     @Override
-    public List<TeacherDto> getAllTeacher() {
+    public List<TeacherDto> getTeachers() {
         return repository.findAll().stream().map(mapper::entityToDto).toList();
     }
 

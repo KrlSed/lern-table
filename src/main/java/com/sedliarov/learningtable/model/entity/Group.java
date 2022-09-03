@@ -23,10 +23,10 @@ public class Group {
 
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "teacherId", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "teacher_id", referencedColumnName = "teacher_id")
     private Teacher teacher;
 
-    @OneToMany(mappedBy="studentId")
+    @OneToMany(mappedBy="group")
     private Set<Student> students;
 }

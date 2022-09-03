@@ -15,17 +15,18 @@ import java.util.UUID;
 public class GroupController {
     private final GroupService service;
 
-    @PostMapping("/add")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public GroupDto addGroup(@RequestBody GroupDto groupDto) {
-        return service.addGroup(groupDto);
+    public GroupDto createGroup(@RequestBody GroupDto groupDto) {
+        return service.createGroup(groupDto);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<GroupDto> getGroups() {
-        return service.getAllGroup();
+        return service.getGroups();
     }
+
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -41,9 +42,8 @@ public class GroupController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteGroup(@PathVariable UUID id) {
+    public void deleteGroup(@PathVariable UUID id) {
         service.deleteGroup(id);
-        return "Group " + id + " has been deleted";
     }
 
 }

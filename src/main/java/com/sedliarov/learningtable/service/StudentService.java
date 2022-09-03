@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface StudentService {
 
-    StudentDto addStudent(StudentDto StudentDto);
+    StudentDto createStudent(StudentDto StudentDto);
 
     StudentDto updateStudent(UUID id, StudentDto StudentDto);
 
@@ -15,5 +15,6 @@ public interface StudentService {
 
     StudentDto getStudentById(UUID id);
 
-    List<StudentDto> getAllStudent();
+    List<StudentDto> getStudents();
+
 }

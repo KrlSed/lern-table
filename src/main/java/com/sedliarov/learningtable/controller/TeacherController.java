@@ -15,16 +15,16 @@ import java.util.UUID;
 public class TeacherController {
     private final TeacherService service;
 
-    @PostMapping("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TeacherDto addTeacher(@RequestBody TeacherDto teacherDto) {
-        return service.addTeacher(teacherDto);
+    public TeacherDto createTeacher(@RequestBody TeacherDto teacherDto) {
+        return service.createTeacher(teacherDto);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<TeacherDto> getTeachers() {
-        return service.getAllTeacher();
+        return service.getTeachers();
     }
 
     @PutMapping("/{id}")
@@ -41,9 +41,8 @@ public class TeacherController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String deleteTeacher(@PathVariable UUID id) {
+    public void deleteTeacher(@PathVariable UUID id) {
         service.deleteTeacher(id);
-        return "Teacher " + id + " has been deleted";
     }
 }
 

@@ -21,7 +21,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper mapper = StudentMapper.INSTANCE;
 
     @Override
-    public StudentDto addStudent(StudentDto studentDto) {
+    public StudentDto createStudent(StudentDto studentDto) {
         Student studentToSave= mapper.dtoToEntity(studentDto);
         return mapper.entityToDto(repository.save(studentToSave));
     }
@@ -31,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
         repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id));
 
         Student studentToUpdate = mapper.dtoToEntity(studentDto);
-        studentToUpdate.setId(id);
+        studentToUpdate.setStudentId(id);
         return mapper.entityToDto(repository.save(studentToUpdate));
     }
 
@@ -42,11 +42,12 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto getStudentById(UUID id) {
-        return mapper.entityToDto(repository.findById(id).orElseThrow(EntityNotFoundException::new));
+        return mapper.entityToDto(repository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id)));
     }
 
     @Override
-    public List<StudentDto> getAllStudent() {
+    public List<StudentDto> getStudents() {
         return repository.findAll().stream().map(mapper::entityToDto).toList();
     }
 

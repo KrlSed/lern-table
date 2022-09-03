@@ -15,7 +15,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student{
+public class Student {
 
     @Id
     @GeneratedValue
@@ -28,6 +28,6 @@ public class Student{
     private Double note;
 
     @ManyToOne
-    @JoinColumn(name="groupId", nullable=false)
+    @JoinColumn(name="group_id", nullable=false)
     private Group group;
 }

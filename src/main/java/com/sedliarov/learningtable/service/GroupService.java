@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface GroupService {
 
-    GroupDto addGroup(GroupDto groupDto);
+    GroupDto createGroup(GroupDto groupDto);
 
     GroupDto updateGroup(UUID id, GroupDto groupDto);
 
@@ -15,5 +15,6 @@ public interface GroupService {
 
     GroupDto getGroupById(UUID id);
 
-    List<GroupDto> getAllGroup();
+    List<GroupDto> getGroups();
+
 }

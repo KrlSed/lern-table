@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TeacherService {
-    TeacherDto addTeacher(TeacherDto TeacherDto);
+    TeacherDto createTeacher(TeacherDto TeacherDto);
 
     TeacherDto updateTeacher(UUID id, TeacherDto TeacherDto);
 
@@ -14,5 +14,5 @@ public interface TeacherService {
 
     TeacherDto getTeacherById(UUID id);
 
-    List<TeacherDto> getAllTeacher();
+    List<TeacherDto> getTeachers();
 }
