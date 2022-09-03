@@ -35,7 +35,7 @@ public class TeacherController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TeacherDto getTeacher(@PathVariable UUID id) {
+    public TeacherDto getTeacherById(@PathVariable UUID id) {
         return service.getTeacherById(id);
     }
 

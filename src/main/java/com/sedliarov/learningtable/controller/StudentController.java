@@ -35,7 +35,7 @@ public class StudentController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public StudentDto getStudent(@PathVariable UUID id) {
+    public StudentDto getStudentById(@PathVariable UUID id) {
         return service.getStudentById(id);
     }
 

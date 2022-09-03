@@ -36,7 +36,7 @@ public class GroupController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GroupDto getGroup(@PathVariable UUID id) {
+    public GroupDto getGroupById(@PathVariable UUID id) {
         return service.getGroupById(id);
     }
 
