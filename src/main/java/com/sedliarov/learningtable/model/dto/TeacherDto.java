@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public class TeacherDto implements Serializable {
 
-    private UUID id;
+    private UUID teacherId;
 
     private String firstName;
 

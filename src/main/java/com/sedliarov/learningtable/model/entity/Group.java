@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -20,15 +19,14 @@ public class Group {
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID groupId;
 
     private String name;
 
     @OneToOne
-    @JoinColumn
+    @JoinColumn(name = "teacherId", referencedColumnName = "id")
     private Teacher teacher;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
-    private List<Student> studentList = new ArrayList<>();
+    @OneToMany(mappedBy="studentId")
+    private Set<Student> students;
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 @Data
 public class GroupDto implements Serializable {
 
-    private UUID id;
+    private UUID groupId;
 
     private String name;
 

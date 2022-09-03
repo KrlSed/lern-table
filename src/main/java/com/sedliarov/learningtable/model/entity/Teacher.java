@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import java.util.UUID;
 
 @Entity
-@Table(name = "teahers")
+@Table(name = "teachers")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,7 +22,7 @@ public class Teacher{
 
     @Id
     @GeneratedValue
-    private UUID id;
+    private UUID teacherId;
 
     private String firstName;
 
