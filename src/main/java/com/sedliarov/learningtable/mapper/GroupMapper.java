@@ -7,9 +7,10 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface GroupMapper {
-    GroupMapper INSTANCE = Mappers.getMapper(GroupMapper.class);
 
-    Group dtoToEntity(GroupDto groupDto);
+  GroupMapper INSTANCE = Mappers.getMapper(GroupMapper.class);
 
-    GroupDto entityToDto(Group group);
+  Group dtoToEntity(GroupDto groupDto);
+
+  GroupDto entityToDto(Group group);
 }

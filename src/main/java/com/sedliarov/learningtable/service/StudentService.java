@@ -7,14 +7,13 @@ import java.util.UUID;
 
 public interface StudentService {
 
-    StudentDto createStudent(StudentDto StudentDto);
+  StudentDto createStudent(StudentDto StudentDto);
 
-    StudentDto updateStudent(UUID id, StudentDto StudentDto);
+  StudentDto updateStudent(UUID id, StudentDto StudentDto);
 
-    void deleteStudent(UUID id);
+  void deleteStudent(UUID id);
 
-    StudentDto getStudentById(UUID id);
+  StudentDto getStudentById(UUID id);
 
-    List<StudentDto> getStudents();
-
+  List<StudentDto> getStudents();
 }

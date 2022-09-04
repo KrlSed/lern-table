@@ -11,12 +11,11 @@ import java.util.UUID;
 @Data
 public class GroupDto implements Serializable {
 
-    private UUID groupId;
+  private UUID groupId;
 
-    private String name;
+  private String name;
 
-    private Teacher teacher;
+  private Teacher teacher;
 
-    private Set<Student> students;
-
+  private Set<Student> students;
 }

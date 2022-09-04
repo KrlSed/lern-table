@@ -9,13 +9,13 @@ import java.util.UUID;
 @Data
 public class TeacherDto implements Serializable {
 
-    private UUID teacherId;
+  private UUID teacherId;
 
-    private String firstName;
+  private String firstName;
 
-    private String secondName;
+  private String secondName;
 
-    private boolean isAdmin;
+  private boolean isAdmin;
 
-    private Group group;
+  private Group group;
 }

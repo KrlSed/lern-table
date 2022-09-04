@@ -8,47 +8,46 @@ import com.sedliarov.learningtable.service.TeacherService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.UUID;
+import javax.persistence.EntityNotFoundException;
 
 @Service
 @AllArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
 
-    private final TeacherRepository repository;
+  private final TeacherRepository repository;
 
-    private final TeacherMapper mapper = TeacherMapper.INSTANCE;
+  private final TeacherMapper mapper = TeacherMapper.INSTANCE;
 
-    @Override
-    public TeacherDto createTeacher(TeacherDto teacherDto) {
-        Teacher teacherToSave= mapper.dtoToEntity(teacherDto);
-        return mapper.entityToDto(repository.save(teacherToSave));
-    }
+  @Override
+  public TeacherDto createTeacher(TeacherDto teacherDto) {
+    Teacher teacherToSave = mapper.dtoToEntity(teacherDto);
+    return mapper.entityToDto(repository.save(teacherToSave));
+  }
 
-    @Override
-    public TeacherDto updateTeacher(UUID id, TeacherDto teacherDto) {
-        repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id));
+  @Override
+  public TeacherDto updateTeacher(UUID id, TeacherDto teacherDto) {
+    repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found with id " + id));
 
-        Teacher teacherToUpdate = mapper.dtoToEntity(teacherDto);
-        teacherToUpdate.setTeacherId(id);
-        return mapper.entityToDto(repository.save(teacherToUpdate));
-    }
+    Teacher teacherToUpdate = mapper.dtoToEntity(teacherDto);
+    teacherToUpdate.setTeacherId(id);
+    return mapper.entityToDto(repository.save(teacherToUpdate));
+  }
 
-    @Override
-    public void deleteTeacher(UUID id) {
-        repository.deleteById(id);
-    }
+  @Override
+  public void deleteTeacher(UUID id) {
+    repository.deleteById(id);
+  }
 
-    @Override
-    public TeacherDto getTeacherById(UUID id) {
-        return mapper.entityToDto(repository.findById(id)
-                .orElseThrow(()-> new EntityNotFoundException("Entity not found with id " + id)));
-    }
+  @Override
+  public TeacherDto getTeacherById(UUID id) {
+    return mapper.entityToDto(repository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException("Entity not found with id " + id)));
+  }
 
-    @Override
-    public List<TeacherDto> getTeachers() {
-        return repository.findAll().stream().map(mapper::entityToDto).toList();
-    }
-
+  @Override
+  public List<TeacherDto> getTeachers() {
+    return repository.findAll().stream().map(mapper::entityToDto).toList();
+  }
 }

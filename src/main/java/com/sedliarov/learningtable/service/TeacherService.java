@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TeacherService {
-    TeacherDto createTeacher(TeacherDto TeacherDto);
 
-    TeacherDto updateTeacher(UUID id, TeacherDto TeacherDto);
+  TeacherDto createTeacher(TeacherDto TeacherDto);
 
-    void deleteTeacher(UUID id);
+  TeacherDto updateTeacher(UUID id, TeacherDto TeacherDto);
 
-    TeacherDto getTeacherById(UUID id);
+  void deleteTeacher(UUID id);
 
-    List<TeacherDto> getTeachers();
+  TeacherDto getTeacherById(UUID id);
+
+  List<TeacherDto> getTeachers();
 }

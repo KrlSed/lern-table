@@ -24,17 +24,17 @@ import javax.persistence.Table;
 @NoArgsConstructor
 public class Group {
 
-    @Id
-    @GeneratedValue
-    private UUID groupId;
+  @Id
+  @GeneratedValue
+  private UUID groupId;
 
-    private String name;
+  private String name;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name="teacher_id")
-    private Teacher teacher;
+  @OneToOne
+  @MapsId
+  @JoinColumn(name = "teacher_id")
+  private Teacher teacher;
 
-    @OneToMany(mappedBy="group")
-    private Set<Student> students;
+  @OneToMany(mappedBy = "group")
+  private Set<Student> students;
 }

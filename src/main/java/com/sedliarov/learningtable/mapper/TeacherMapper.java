@@ -7,10 +7,11 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface TeacherMapper {
-    TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);
 
-    Teacher dtoToEntity(TeacherDto teacherDto);
+  TeacherMapper INSTANCE = Mappers.getMapper(TeacherMapper.class);
 
-    TeacherDto entityToDto(Teacher teacher);
+  Teacher dtoToEntity(TeacherDto teacherDto);
+
+  TeacherDto entityToDto(Teacher teacher);
 }
 
