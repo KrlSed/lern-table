@@ -6,6 +6,12 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.UUID;
 
+
+/**
+ * This object is student DTO.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Data
 public class StudentDto implements Serializable {
 

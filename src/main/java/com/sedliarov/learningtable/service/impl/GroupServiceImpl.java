@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
+/**
+ * Implementation for {@link GroupService}.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Service
 @AllArgsConstructor
 public class GroupServiceImpl implements GroupService {

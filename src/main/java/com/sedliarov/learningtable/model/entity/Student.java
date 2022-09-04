@@ -13,6 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/**
+ * This object is entity student.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Entity
 @Table(name = "students")
 @Getter

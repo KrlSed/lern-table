@@ -5,11 +5,16 @@ import com.sedliarov.learningtable.model.dto.StudentDto;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Student service with necessary REST api methods.
+ *
+ * @author  Kirill Sedliarov
+ */
 public interface StudentService {
 
-  StudentDto createStudent(StudentDto StudentDto);
+  StudentDto createStudent(StudentDto studentDto);
 
-  StudentDto updateStudent(UUID id, StudentDto StudentDto);
+  StudentDto updateStudent(UUID id, StudentDto studentDto);
 
   void deleteStudent(UUID id);
 

@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * REST controller for {@link StudentDto}.
+ *
+ * @author  Kirill Sedliarov
+ */
 @RestController
 @AllArgsConstructor
 @RequestMapping("/students")

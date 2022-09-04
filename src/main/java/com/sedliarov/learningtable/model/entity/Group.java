@@ -16,6 +16,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * This object is entity group.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Entity
 @Table(name = "groups")
 @Getter

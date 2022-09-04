@@ -8,6 +8,11 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * This object is group DTO.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Data
 public class GroupDto implements Serializable {
 

@@ -6,6 +6,11 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * This object is teacher DTO.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Data
 public class TeacherDto implements Serializable {
 

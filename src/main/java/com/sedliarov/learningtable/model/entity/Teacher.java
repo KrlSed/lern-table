@@ -12,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * This object is entity teacher.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Entity
 @Table(name = "teachers")
 @Getter

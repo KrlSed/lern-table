@@ -12,6 +12,12 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
+
+/**
+ * Implementation for {@link StudentService}.
+ *
+ * @author  Kirill Sedliarov
+ */
 @Service
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
