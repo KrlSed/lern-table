@@ -10,12 +10,12 @@ on:
     - develop
 
 jobs:
-  checkstyle:
+  build:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
         
-    - name: Checkstyle with Maven
-      run: mvn -B checkstyle:check --file pom.xml config/checkstyle_google_checks-extended.xml
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
