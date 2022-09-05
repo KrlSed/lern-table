@@ -15,7 +15,7 @@ import javax.persistence.EntityNotFoundException;
 /**
  * Implementation for {@link GroupService}.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Service
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public class GroupServiceImpl implements GroupService {
 
   private final GroupRepository repository;
 
-  private final GroupMapper mapper = GroupMapper.INSTANCE;
+  private final GroupMapper mapper;
 
   @Override
   public GroupDto createGroup(GroupDto groupDto) {
