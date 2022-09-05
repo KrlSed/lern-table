@@ -7,31 +7,31 @@ import com.sedliarov.learningtable.repository.TeacherRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
 
+  private static final String TEACHERS_URL = "/teachers/";
   @Autowired
-  private TeacherRepository repository;
+  private TeacherRepository teacherRepository;
 
+  // TODO: 9/5/2022 Need to create beans for all Mappers in Configuration class. And use @Autowired in tests.
   private TeacherMapper mapper = TeacherMapper.INSTANCE;
 
   @Test
-  void testGetTeacherById(){
+  void testGetTeacherById() {
     // given
+    // TODO: 9/5/2022 Need to implement Fixture{EntityName} static class and use in tests, like this case.
     Teacher newTeacher = new Teacher(null, "Regina", "Todarenco", false, null);
-    Teacher savedTeacher = repository.save(newTeacher);
+    Teacher savedTeacher = teacherRepository.save(newTeacher);
     TeacherDto teacherMapper = mapper.entityToDto(newTeacher);
+
     // when
     ResponseEntity<TeacherDto> teacher =
-        exchangeGetWithoutAuth("/teachers/" + savedTeacher.getTeacherId(),
-            TeacherDto.class);
+        exchangeGetWithoutAuth(TEACHERS_URL + savedTeacher.getTeacherId(), TeacherDto.class);
+
     // then
     assertThat(teacher.getBody()).isEqualTo(teacherMapper);
   }
 }
-

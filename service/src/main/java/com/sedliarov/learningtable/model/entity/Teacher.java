@@ -6,18 +6,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
  * This object is entity teacher.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Entity
 @Table(name = "teachers")
@@ -37,7 +35,6 @@ public class Teacher {
 
   private boolean admin;
 
-  @OneToOne(cascade = CascadeType.ALL, mappedBy = "teacher")
-  @JoinColumn(nullable = true)
+  @OneToOne(mappedBy = "teacher")
   private Group group;
 }
