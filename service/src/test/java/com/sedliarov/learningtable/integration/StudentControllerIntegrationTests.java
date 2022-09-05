@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,26 +63,18 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   @Test
   void testGetStudents() {
     // given
-    Student newStudent1 = StudentFixture.createEntity();
-    Student savedStudent1 = studentRepository.save(newStudent1);
-    Student newStudent2 = StudentFixture.createEntityWithFirstAndSecondName("Aria", "Arievna");
-    Student savedStudent2 = studentRepository.save(newStudent2);
-    StudentDto studentMapper1 = mapper.entityToDto(savedStudent1);
-    StudentDto studentMapper2 = mapper.entityToDto(savedStudent2);
-    List<StudentDto> equalList = new ArrayList<>();
-    equalList.add(studentMapper1);
-    equalList.add(studentMapper2);
+    Student student = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria", "Arievna"));
+    Student student1 = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria1", "Arievna1"));
+    List<StudentDto> expectedStudents = List.of(mapper.entityToDto(student), mapper.entityToDto(student1));
+
     // when
-    ResponseEntity<List<StudentDto>> students =
-        exchangeGetAllWithoutAuth(STUDENTS_URL, List.class);
+    ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
+
     // then
-    System.out.println(studentMapper1.toString());
-    System.out.println((StudentDto) students.getBody().get(1));
-    System.out.println(studentMapper2);
-    assertThat(!students.getBody().isEmpty());
-    assertThat(students.getBody()).isEqualTo(equalList);
-    assertThat(students.getBody().get(0)).isEqualTo(studentMapper1);
-    assertThat(students.getBody().get(1)).isEqualTo(studentMapper2);
+    List<StudentDto> students = Arrays.stream(response.getBody()).toList();
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(students).containsExactlyElementsOf(expectedStudents);
   }
 
   @Test
