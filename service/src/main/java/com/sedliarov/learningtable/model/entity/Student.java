@@ -37,6 +37,6 @@ public class Student {
   private Double note;
 
   @ManyToOne
-  @JoinColumn(name = "group_id", nullable = false)
+  @JoinColumn(name = "group_id", nullable = true)
   private Group group;
 }

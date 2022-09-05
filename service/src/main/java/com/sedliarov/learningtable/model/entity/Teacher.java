@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -33,8 +35,9 @@ public class Teacher {
 
   private String secondName;
 
-  private boolean isAdmin;
+  private boolean admin;
 
-  @OneToOne(mappedBy = "teacher")
+  @OneToOne(cascade = CascadeType.ALL, mappedBy = "teacher")
+  @JoinColumn(nullable = true)
   private Group group;
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,9 +36,9 @@ public class Group {
 
   private String name;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @MapsId
-  @JoinColumn(name = "teacher_id")
+  @JoinColumn(name = "teacher_id", nullable = true)
   private Teacher teacher;
 
   @OneToMany(mappedBy = "group")
