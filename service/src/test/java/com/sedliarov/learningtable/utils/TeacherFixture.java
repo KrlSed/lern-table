@@ -37,7 +37,7 @@ public class TeacherFixture {
     return new Teacher(null, FIRST_NAME, SECOND_NAME, ADMIN, group);
   }
 
-  public static Teacher createEntityWithFirstAndSecondNameAndADMIN(String firstName, String secondName, boolean admin) {
+  public static Teacher createEntityWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean admin) {
     return new Teacher(null, firstName, secondName, admin, null);
   }
 
@@ -65,7 +65,7 @@ public class TeacherFixture {
     return new TeacherDto(null, FIRST_NAME, SECOND_NAME, ADMIN, group);
   }
 
-  public static TeacherDto createDtoWithFirstAndSecondNameAndADMIN(String firstName, String secondName, boolean admin) {
+  public static TeacherDto createDtoWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean admin) {
     return new TeacherDto(null, firstName, secondName, admin, null);
   }
 

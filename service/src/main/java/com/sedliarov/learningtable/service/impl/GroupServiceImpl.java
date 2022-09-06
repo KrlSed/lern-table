@@ -46,6 +46,11 @@ public class GroupServiceImpl implements GroupService {
   }
 
   @Override
+  public void deleteGroups() {
+    repository.deleteAll();
+  }
+
+  @Override
   public GroupDto getGroupById(UUID id) {
     return mapper.entityToDto(repository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Entity not found with id " + id)));

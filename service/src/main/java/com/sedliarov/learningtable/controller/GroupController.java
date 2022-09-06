@@ -58,4 +58,9 @@ public class GroupController {
   public void deleteGroup(@PathVariable UUID id) {
     service.deleteGroup(id);
   }
+  //@DeleteMapping
+  //@ResponseStatus(HttpStatus.OK)
+  //public void deleteGroups() {
+  //  service.deleteGroups();
+  //}
 }
