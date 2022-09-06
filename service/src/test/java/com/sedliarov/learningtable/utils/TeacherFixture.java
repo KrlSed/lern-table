@@ -9,7 +9,7 @@ import java.util.UUID;
 /**
  * Teacher dto and entity fast object constructor.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 public class TeacherFixture {
 

@@ -74,10 +74,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     Student student = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria", "Arievna"));
     Student student1 = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria1", "Arievna1"));
 
-    List<StudentDto> expectedStudents = List.of(
-        mapper.entityToDto(student),
-        mapper.entityToDto(student1)
-    );
+    List<StudentDto> expectedStudents = List.of(mapper.entityToDto(student), mapper.entityToDto(student1));
 
     // when
     ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
@@ -85,8 +82,8 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     // then
     List<StudentDto> students = Arrays.stream(response.getBody()).toList();
     List<StudentDto> createdStudents = new ArrayList<StudentDto>();
-    createdStudents.add(students.get(students.size()-2));
-    createdStudents.add(students.get(students.size()-1));
+    createdStudents.add(students.get(students.size() - 2));
+    createdStudents.add(students.get(students.size() - 1));
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(createdStudents).containsExactlyElementsOf(expectedStudents);
   }
@@ -107,10 +104,10 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     // then
     List<StudentDto> students = Arrays.stream(response.getBody()).toList();
     List<StudentDto> createdStudents = new ArrayList<StudentDto>();
-    System.out.println(students.get(students.size()-1));
-    createdStudents.add(students.get(students.size()-3));
-    createdStudents.add(students.get(students.size()-2));
-    createdStudents.add(students.get(students.size()-1));
+    System.out.println(students.get(students.size() - 1));
+    createdStudents.add(students.get(students.size() - 3));
+    createdStudents.add(students.get(students.size() - 2));
+    createdStudents.add(students.get(students.size() - 1));
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(createdStudents).containsExactlyElementsOf(expectedStudents);
   }
@@ -126,7 +123,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeAddWithoutAuth(STUDENTS_URL, newStudent, StudentDto.class);
 
     // then
-    assertThat(student.getStatusCodeValue()).isEqualTo(201);
+    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     assertThat(student.getBody().getFirstName()).isEqualTo(newStudent.getFirstName());
     assertThat(student.getBody().getSecondName()).isEqualTo(newStudent.getSecondName());
     assertThat(student.getBody().getNote()).isEqualTo(newStudent.getNote());
@@ -144,7 +141,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeAddWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), newStudent, StudentDto.class);
 
     // then
-    assertThat(student.getStatusCodeValue()).isEqualTo(405);
+    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
   }
 
   @Test
