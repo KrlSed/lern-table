@@ -29,6 +29,7 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Test
   void testGetGroupById() {
+
     // given
     // TODO: 9/5/2022 Need to implement Fixture{EntityName} static class and use in tests, like this case.
     Group newGroup = GroupFixture.createEntity();

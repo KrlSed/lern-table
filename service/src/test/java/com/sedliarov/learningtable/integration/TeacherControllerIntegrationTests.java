@@ -38,7 +38,6 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
     ResponseEntity<TeacherDto> teacher =
         exchangeGetWithoutAuth(TEACHERS_URL + savedTeacher.getTeacherId(), TeacherDto.class);
 
-    System.out.println(teacher.getBody().getTeacherId());
     // then
     assertThat(teacher.getBody()).isEqualTo(teacherMapper);
   }
