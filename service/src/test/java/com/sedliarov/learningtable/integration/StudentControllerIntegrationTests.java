@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,63 +36,95 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Test
   void testGetStudentById() {
+
     // given
     // TODO: 9/5/2022 Need to implement Fixture{EntityName} static class and use in tests, like this case.
     Student newStudent = StudentFixture.createEntity();
     Student savedStudent = studentRepository.save(newStudent);
     StudentDto studentMapper = mapper.entityToDto(newStudent);
+
     // when
     ResponseEntity<StudentDto> student =
         exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
+
     // then
     assertThat(student.getBody()).isEqualTo(studentMapper);
   }
 
   @Test
   void negativeTestGetStudentById() {
+
     // given
     Student newStudent = StudentFixture.createEntityWithId(UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a"));
     Student savedStudent = studentRepository.save(newStudent);
     StudentDto studentMapper = mapper.entityToDto(newStudent);
+
     // when
     ResponseEntity<StudentDto> student =
         exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
+
     // then
-    assertThat(student.getBody()).isEqualTo(studentMapper);
+    assertThat(student.getBody()).isNotEqualTo(studentMapper);
   }
 
   @Test
   void testGetStudents() {
+
     // given
-    Student newStudent1 = StudentFixture.createEntity();
-    Student savedStudent1 = studentRepository.save(newStudent1);
-    Student newStudent2 = StudentFixture.createEntityWithFirstAndSecondName("Aria", "Arievna");
-    Student savedStudent2 = studentRepository.save(newStudent2);
-    StudentDto studentMapper1 = mapper.entityToDto(savedStudent1);
-    StudentDto studentMapper2 = mapper.entityToDto(savedStudent2);
-    List<StudentDto> equalList = new ArrayList<>();
-    equalList.add(studentMapper1);
-    equalList.add(studentMapper2);
+    Student student = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria", "Arievna"));
+    Student student1 = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria1", "Arievna1"));
+
+    List<StudentDto> expectedStudents = List.of(
+        mapper.entityToDto(student),
+        mapper.entityToDto(student1)
+    );
+
     // when
-    ResponseEntity<List<StudentDto>> students =
-        exchangeGetAllWithoutAuth(STUDENTS_URL, List.class);
+    ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
+
     // then
-    System.out.println(studentMapper1.toString());
-    System.out.println((StudentDto) students.getBody().get(1));
-    System.out.println(studentMapper2);
-    assertThat(!students.getBody().isEmpty());
-    assertThat(students.getBody()).isEqualTo(equalList);
-    assertThat(students.getBody().get(0)).isEqualTo(studentMapper1);
-    assertThat(students.getBody().get(1)).isEqualTo(studentMapper2);
+    List<StudentDto> students = Arrays.stream(response.getBody()).toList();
+    List<StudentDto> createdStudents = new ArrayList<StudentDto>();
+    createdStudents.add(students.get(students.size()-2));
+    createdStudents.add(students.get(students.size()-1));
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(createdStudents).containsExactlyElementsOf(expectedStudents);
   }
 
   @Test
-  void testAddStudent() {
+  void negativeTestGetStudents() {
+
+    // given
+    Student student = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria", "Arievna"));
+    Student student1 = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria1", "Arievna1"));
+    Student emptyStudent = studentRepository.save(new Student());
+    List<StudentDto> expectedStudents = List.of(mapper.entityToDto(student),
+        mapper.entityToDto(student1),
+        mapper.entityToDto(emptyStudent));
+
+    // when
+    ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
+    // then
+    List<StudentDto> students = Arrays.stream(response.getBody()).toList();
+    List<StudentDto> createdStudents = new ArrayList<StudentDto>();
+    System.out.println(students.get(students.size()-1));
+    createdStudents.add(students.get(students.size()-3));
+    createdStudents.add(students.get(students.size()-2));
+    createdStudents.add(students.get(students.size()-1));
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(createdStudents).containsExactlyElementsOf(expectedStudents);
+  }
+
+  @Test
+  void testCreateStudent() {
+
     // given
     StudentDto newStudent = StudentFixture.createDto();
+
     // when
     ResponseEntity<StudentDto> student =
         exchangeAddWithoutAuth(STUDENTS_URL, newStudent, StudentDto.class);
+
     // then
     assertThat(student.getStatusCodeValue()).isEqualTo(201);
     assertThat(student.getBody().getFirstName()).isEqualTo(newStudent.getFirstName());
@@ -101,28 +134,65 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   }
 
   @Test
-  void testDeleteStudent() {
+  void negativeTestCreateStudent() {
+
     // given
     StudentDto newStudent = StudentFixture.createDto();
+
+    // when
+    ResponseEntity<StudentDto> student =
+        exchangeAddWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), newStudent, StudentDto.class);
+
+    // then
+    assertThat(student.getStatusCodeValue()).isEqualTo(405);
+  }
+
+  @Test
+  void testDeleteStudent() {
+
+    // given
+    Student newStudent = StudentFixture.createEntity();
+    studentRepository.save(newStudent);
+
     // when
     ResponseEntity<StudentDto> student =
         exchangeDeleteWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId());
+
     // then
     ResponseEntity<StudentDto> check =
         exchangeGetWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), StudentDto.class);
     assertThat(student).isNull();
-    assertThat(check.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(check.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @Test
+  void negativeTestDeleteStudent() {
+
+    // given
+    studentRepository.save(StudentFixture.createEntity());
+
+    // when
+    ResponseEntity<StudentDto> student =
+        exchangeDeleteWithoutAuth(STUDENTS_URL);
+
+    // then
+    ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
+    List<StudentDto> students = Arrays.stream(response.getBody()).toList();
+    assertThat(students).isNotEmpty();
   }
 
   @Test
   void testUpdateStudent() {
+
     // given
     Student newStudent = StudentFixture.createEntity();
     Student savedStudent = studentRepository.save(newStudent);
     StudentDto newStudentDto = StudentFixture.createDtoWithFirstAndSecondName("Maria", "Sharapova");
+
     // when
     ResponseEntity<StudentDto> student =
         exchangeUpdateWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), newStudentDto);
+
     // then
     ResponseEntity<StudentDto> check =
         exchangeGetWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), StudentDto.class);
@@ -131,5 +201,21 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     assertThat(check.getBody().getFirstName()).isEqualTo("Maria");
     assertThat(check.getBody().getSecondName()).isEqualTo("Sharapova");
     assertThat(check.getBody().getNote()).isEqualTo(savedStudent.getNote());
+  }
+
+  @Test
+  void negativeTestUpdateStudent() {
+
+    // given
+    StudentDto newStudentDto = StudentFixture.createDtoWithFirstAndSecondName("Maria", "Sharapova");
+
+    // when
+    ResponseEntity<StudentDto> student =
+        exchangeUpdateWithoutAuth(STUDENTS_URL + "/" + newStudentDto.getStudentId(), newStudentDto);
+
+    // then
+    ResponseEntity<StudentDto> check =
+        exchangeGetWithoutAuth(STUDENTS_URL + "/" + newStudentDto.getStudentId(), StudentDto.class);
+    assertThat(student).isNull();
   }
 }
