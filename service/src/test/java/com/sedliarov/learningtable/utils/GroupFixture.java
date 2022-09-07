@@ -4,6 +4,7 @@ import com.sedliarov.learningtable.model.dto.GroupDto;
 import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.model.entity.Student;
 import com.sedliarov.learningtable.model.entity.Teacher;
+import lombok.experimental.UtilityClass;
 
 import java.util.Collections;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.UUID;
  *
  * @author Kirill Sedliarov
  */
+@UtilityClass
 public class GroupFixture {
 
   private static final String NAME = "11111";

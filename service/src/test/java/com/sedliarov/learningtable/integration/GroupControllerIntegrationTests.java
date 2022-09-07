@@ -23,7 +23,6 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
   @Autowired
   private GroupRepository groupRepository;
 
-  // TODO: 9/5/2022 Need to create beans for all Mappers in Configuration class. And use @Autowired in tests.
   @Autowired
   private GroupMapper mapper;
 
@@ -31,7 +30,6 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
   void testGetGroupById() {
 
     // given
-    // TODO: 9/5/2022 Need to implement Fixture{EntityName} static class and use in tests, like this case.
     Group newGroup = GroupFixture.createEntity();
     Group savedGroup = groupRepository.save(newGroup);
 

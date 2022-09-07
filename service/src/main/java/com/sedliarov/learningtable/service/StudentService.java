@@ -18,8 +18,6 @@ public interface StudentService {
 
   void deleteStudent(UUID id);
 
-  void deleteStudents();
-
   StudentDto getStudentById(UUID id);
 
   List<StudentDto> getStudents();

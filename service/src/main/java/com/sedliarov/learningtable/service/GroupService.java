@@ -18,8 +18,6 @@ public interface GroupService {
 
   void deleteGroup(UUID id);
 
-  void deleteGroups();
-
   GroupDto getGroupById(UUID id);
 
   List<GroupDto> getGroups();

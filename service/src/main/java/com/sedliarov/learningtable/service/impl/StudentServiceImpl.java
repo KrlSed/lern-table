@@ -46,11 +46,6 @@ public class StudentServiceImpl implements StudentService {
   }
 
   @Override
-  public void deleteStudents() {
-    repository.deleteAll();
-  }
-
-  @Override
   public StudentDto getStudentById(UUID id) {
     return mapper.entityToDto(repository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Entity not found with id " + id)));

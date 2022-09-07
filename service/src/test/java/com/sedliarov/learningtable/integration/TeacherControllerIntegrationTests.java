@@ -22,14 +22,13 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
   @Autowired
   private TeacherRepository teacherRepository;
 
-  // TODO: 9/5/2022 Need to create beans for all Mappers in Configuration class. And use @Autowired in tests.
   @Autowired
   private TeacherMapper mapper;
 
   @Test
   void testGetTeacherById() {
+
     // given
-    // TODO: 9/5/2022 Need to implement Fixture{EntityName} static class and use in tests, like this case.
     Teacher newTeacher = TeacherFixture.createEntity();
     Teacher savedTeacher = teacherRepository.save(newTeacher);
     TeacherDto teacherMapper = mapper.entityToDto(newTeacher);

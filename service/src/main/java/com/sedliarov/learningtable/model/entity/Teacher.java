@@ -18,7 +18,7 @@ import javax.persistence.Table;
  * @author Kirill Sedliarov
  */
 @Entity
-@Table(name = "teachers")
+@Table(name = "teacher")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -33,7 +33,7 @@ public class Teacher {
 
   private String secondName;
 
-  private boolean admin;
+  private boolean isAdmin;
 
   @OneToOne(mappedBy = "teacher")
   private Group group;

@@ -30,7 +30,6 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   @Autowired
   private StudentRepository studentRepository;
 
-  // TODO: 9/5/2022 Need to create beans for all Mappers in Configuration class. And use @Autowired in tests.
   @Autowired
   private StudentMapper mapper;
 
@@ -38,16 +37,16 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   void testGetStudentById() {
 
     // given
-    // TODO: 9/5/2022 Need to implement Fixture{EntityName} static class and use in tests, like this case.
-    Student newStudent = StudentFixture.createEntity();
-    Student savedStudent = studentRepository.save(newStudent);
-    StudentDto studentMapper = mapper.entityToDto(newStudent);
+    Student studentForSave = StudentFixture.createEntity();
+    Student savedStudent = studentRepository.save(studentForSave);
+    StudentDto studentMapper = mapper.entityToDto(savedStudent);
 
     // when
     ResponseEntity<StudentDto> student =
         exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
 
     // then
+    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(student.getBody()).isEqualTo(studentMapper);
   }
 
@@ -64,6 +63,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
 
     // then
+    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(student.getBody()).isNotEqualTo(studentMapper);
   }
 
@@ -85,6 +85,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Test
   void negativeTestGetStudents() {
+
     // given
     List<StudentDto> expectedStudents = new ArrayList<>();
 
@@ -92,7 +93,6 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
 
     // then
-    List<StudentDto> students = Arrays.stream(response.getBody()).toList();
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     assertThat(response.getBody()).containsExactlyElementsOf(expectedStudents);
   }
@@ -160,6 +160,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     // then
     ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
     List<StudentDto> students = Arrays.stream(response.getBody()).toList();
+    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
     assertThat(students).isNotEmpty();
   }
 
@@ -196,8 +197,6 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeUpdateWithoutAuth(STUDENTS_URL + "/" + newStudentDto.getStudentId(), newStudentDto, StudentDto.class);
 
     // then
-    ResponseEntity<StudentDto> check =
-        exchangeGetWithoutAuth(STUDENTS_URL + "/" + newStudentDto.getStudentId(), StudentDto.class);
     assertThat(student.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 }

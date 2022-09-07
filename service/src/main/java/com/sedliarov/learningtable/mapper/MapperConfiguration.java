@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Mapper configuration to load beans in moment init.
+ * Mapper configuration.
  *
  * @author  Kirill Sedliarov
  */

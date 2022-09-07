@@ -58,11 +58,4 @@ public class TeacherController {
   public void deleteTeacher(@PathVariable UUID id) {
     service.deleteTeacher(id);
   }
-
-  //@DeleteMapping
-  //@ResponseStatus(HttpStatus.OK)
-  //public void deleteTeachers() {
-  //  service.deleteTeachers();
-  //}
 }
-

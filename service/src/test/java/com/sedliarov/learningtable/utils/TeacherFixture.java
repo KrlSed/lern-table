@@ -3,6 +3,7 @@ package com.sedliarov.learningtable.utils;
 import com.sedliarov.learningtable.model.dto.TeacherDto;
 import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.model.entity.Teacher;
+import lombok.experimental.UtilityClass;
 
 import java.util.UUID;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
  *
  * @author Kirill Sedliarov
  */
+@UtilityClass
 public class TeacherFixture {
 
   private static final String FIRST_NAME = "Regina";

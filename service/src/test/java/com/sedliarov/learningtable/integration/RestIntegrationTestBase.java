@@ -1,8 +1,8 @@
 package com.sedliarov.learningtable.integration;
 
-import com.sedliarov.learningtable.service.GroupService;
-import com.sedliarov.learningtable.service.StudentService;
-import com.sedliarov.learningtable.service.TeacherService;
+import com.sedliarov.learningtable.repository.GroupRepository;
+import com.sedliarov.learningtable.repository.StudentRepository;
+import com.sedliarov.learningtable.repository.TeacherRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,19 +29,37 @@ public class RestIntegrationTestBase {
   private TestRestTemplate testRestTemplate;
 
   @Autowired
-  private StudentService studentService;
+  private StudentRepository studentRepository;
 
   @Autowired
-  private GroupService groupService;
+  private GroupRepository groupRepository;
 
   @Autowired
-  private TeacherService teacherService;
+  private TeacherRepository teacherRepository;
 
   @BeforeEach
-  public void nullDataBase() {
-    studentService.deleteStudents();
-    teacherService.deleteTeachers();
-    groupService.deleteGroups();
+  public void beforeEach() {
+    clearDataBase();
+  }
+
+  public void clearDataBase() {
+    studentRepository.deleteAll();
+    teacherRepository.deleteAll();
+    groupRepository.deleteAll();
+  }
+
+  private <T> HttpEntity<T> createRequestEntity(T entity) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+    HttpEntity<T> requestEntity = new HttpEntity<>(entity, headers);
+    return requestEntity;
+  }
+
+  private <T> HttpEntity<T> createRequestEntity() {
+    HttpHeaders headers = new HttpHeaders();
+    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+    HttpEntity<T> requestEntity = new HttpEntity<>(headers);
+    return requestEntity;
   }
 
   protected <T> ResponseEntity<T> exchangeGetWithoutAuth(String url, Class<T> responseType) {
@@ -53,16 +71,10 @@ public class RestIntegrationTestBase {
   }
 
   protected <T> ResponseEntity<T> exchangeUpdateWithoutAuth(String url, T entity, Class<T> responseType) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-    HttpEntity<T> requestEntity = new HttpEntity<T>(entity, headers);
-    return testRestTemplate.exchange(url, HttpMethod.PUT, requestEntity, responseType);
+    return testRestTemplate.exchange(url, HttpMethod.PUT, createRequestEntity(entity), responseType);
   }
 
   protected <T> ResponseEntity<T> exchangeDeleteWithoutAuth(String url, Class<T> responseType) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-    HttpEntity<T> requestEntity = new HttpEntity<T>(headers);
-    return testRestTemplate.exchange(url, HttpMethod.DELETE, requestEntity, responseType);
+    return testRestTemplate.exchange(url, HttpMethod.DELETE, createRequestEntity(), responseType);
   }
 }

@@ -18,8 +18,6 @@ public interface TeacherService {
 
   void deleteTeacher(UUID id);
 
-  void deleteTeachers();
-
   TeacherDto getTeacherById(UUID id);
 
   List<TeacherDto> getTeachers();

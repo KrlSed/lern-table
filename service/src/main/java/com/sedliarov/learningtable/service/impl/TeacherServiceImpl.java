@@ -46,11 +46,6 @@ public class TeacherServiceImpl implements TeacherService {
   }
 
   @Override
-  public void deleteTeachers() {
-    repository.deleteAll();
-  }
-
-  @Override
   public TeacherDto getTeacherById(UUID id) {
     return mapper.entityToDto(repository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("Entity not found with id " + id)));
