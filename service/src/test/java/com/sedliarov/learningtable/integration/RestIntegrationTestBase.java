@@ -21,6 +21,7 @@ import java.util.Collections;
  *
  * @author Kirill Sedliarov
  */
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 public class RestIntegrationTestBase {
