@@ -12,66 +12,104 @@ import java.util.UUID;
  *
  * @author  Kirill Sedliarov
  */
+
 @UtilityClass
 public class StudentFixture {
 
   private static final String FIRST_NAME = "Regina";
   private static final String SECOND_NAME = "Todarenko";
+
   private static final Double NOTE = 9.4;
 
-  public static Student createEntity() {
+  public Student createEntity() {
     return new Student(null, FIRST_NAME, SECOND_NAME, NOTE, null);
   }
 
-  public static Student createEntityWithId(UUID id) {
-    return new Student(id, FIRST_NAME, SECOND_NAME, NOTE, null);
+  public Student createEntityWithId(UUID id) {
+    Student student = createEntity();
+    student.setStudentId(id);
+    return student;
   }
 
-  public static Student createEntityWithFirstAndSecondName(String firstName, String secondName) {
-    return new Student(null, firstName, secondName, NOTE, null);
+  public Student createEntityWithFirstAndSecondName(String firstName, String secondName) {
+    Student student = createEntity();
+    student.setFirstName(firstName);
+    student.setSecondName(secondName);
+    return student;
   }
 
-  public static Student createEntityWithNote(Double note) {
-    return new Student(null, FIRST_NAME, SECOND_NAME, note, null);
+  public Student createEntityWithNote(Double note) {
+    Student student = createEntity();
+    student.setNote(note);
+    return student;
   }
 
-  public static Student createEntityWithGroup(Group group) {
-    return new Student(null, FIRST_NAME, SECOND_NAME, NOTE, group);
+  public Student createEntityWithGroup(Group group) {
+    Student student = createEntity();
+    student.setGroup(group);
+    return student;
   }
 
-  public static Student createEntityWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
-    return new Student(null, firstName, secondName, note, null);
+  public Student createEntityWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
+    Student student = createEntity();
+    student.setFirstName(firstName);
+    student.setSecondName(secondName);
+    student.setNote(note);
+    return student;
   }
 
-  public static Student createEntityWithoutId(String firstName, String secondName, Double note, Group group) {
-    return new Student(null, firstName, secondName, note, group);
+  public Student createEntityWithoutId(String firstName, String secondName, Double note, Group group) {
+    Student student = createEntity();
+    student.setFirstName(firstName);
+    student.setSecondName(secondName);
+    student.setNote(note);
+    student.setGroup(group);
+    return student;
   }
 
-  public static StudentDto createDto() {
+  public StudentDto createDto() {
     return new StudentDto(null, FIRST_NAME, SECOND_NAME, NOTE, null);
   }
 
-  public static StudentDto createDtoWithId(UUID id) {
-    return new StudentDto(id, FIRST_NAME, SECOND_NAME, NOTE, null);
+  public StudentDto createDtoWithId(UUID id) {
+    StudentDto student = createDto();
+    student.setStudentId(id);
+    return student;
   }
 
-  public static StudentDto createDtoWithFirstAndSecondName(String firstName, String secondName) {
-    return new StudentDto(null, firstName, secondName, NOTE, null);
+  public StudentDto createDtoWithFirstAndSecondName(String firstName, String secondName) {
+    StudentDto studentDto = createDto();
+    studentDto.setFirstName(firstName);
+    studentDto.setSecondName(secondName);
+    return studentDto;
   }
 
-  public static StudentDto createDtoWithNote(Double note) {
-    return new StudentDto(null, FIRST_NAME, SECOND_NAME, note, null);
+  public StudentDto createDtoWithNote(Double note) {
+    StudentDto studentDto = createDto();
+    studentDto.setNote(note);
+    return studentDto;
   }
 
-  public static StudentDto createDtoWithGroup(Group group) {
-    return new StudentDto(null, FIRST_NAME, SECOND_NAME, NOTE, group);
+  public StudentDto createDtoWithGroup(Group group) {
+    StudentDto studentDto = createDto();
+    studentDto.setGroup(group);
+    return studentDto;
   }
 
-  public static StudentDto createDtoWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
-    return new StudentDto(null, firstName, secondName, note, null);
+  public StudentDto createDtoWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
+    StudentDto studentDto = createDto();
+    studentDto.setFirstName(firstName);
+    studentDto.setSecondName(secondName);
+    studentDto.setNote(note);
+    return studentDto;
   }
 
-  public static StudentDto createDtoWithoutId(String firstName, String secondName, Double note, Group group) {
-    return new StudentDto(null, firstName, secondName, note, group);
+  public StudentDto createDtoWithoutId(String firstName, String secondName, Double note, Group group) {
+    StudentDto studentDto = createDto();
+    studentDto.setFirstName(firstName);
+    studentDto.setSecondName(secondName);
+    studentDto.setNote(note);
+    studentDto.setGroup(group);
+    return studentDto;
   }
 }

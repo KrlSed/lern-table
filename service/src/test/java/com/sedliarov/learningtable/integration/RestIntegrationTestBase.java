@@ -43,10 +43,32 @@ public class RestIntegrationTestBase {
     clearDataBase();
   }
 
+  /**
+   * Method calling repositories to clear database with JPA.
+   *
+   * @author Kirill Sedliarov
+   */
+
   public void clearDataBase() {
     studentRepository.deleteAll();
     teacherRepository.deleteAll();
     groupRepository.deleteAll();
+  }
+
+  protected <T> ResponseEntity<T> exchangeGetWithoutAuth(String url, Class<T> responseType) {
+    return testRestTemplate.getForEntity(url, responseType);
+  }
+
+  protected <T> ResponseEntity<T> exchangePostWithoutAuth(String url, T entity, Class<T> responseType) {
+    return testRestTemplate.postForEntity(url, entity, responseType);
+  }
+
+  protected <T> ResponseEntity<T> exchangePutWithoutAuth(String url, T entity, Class<T> responseType) {
+    return testRestTemplate.exchange(url, HttpMethod.PUT, createRequestEntity(entity), responseType);
+  }
+
+  protected <T> ResponseEntity<T> exchangeDeleteWithoutAuth(String url, Class<T> responseType) {
+    return testRestTemplate.exchange(url, HttpMethod.DELETE, createRequestEntity(), responseType);
   }
 
   private <T> HttpEntity<T> createRequestEntity(T entity) {
@@ -61,21 +83,5 @@ public class RestIntegrationTestBase {
     headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
     HttpEntity<T> requestEntity = new HttpEntity<>(headers);
     return requestEntity;
-  }
-
-  protected <T> ResponseEntity<T> exchangeGetWithoutAuth(String url, Class<T> responseType) {
-    return testRestTemplate.getForEntity(url, responseType);
-  }
-
-  protected <T> ResponseEntity<T> exchangeAddWithoutAuth(String url, T entity, Class<T> responseType) {
-    return testRestTemplate.postForEntity(url, entity, responseType);
-  }
-
-  protected <T> ResponseEntity<T> exchangeUpdateWithoutAuth(String url, T entity, Class<T> responseType) {
-    return testRestTemplate.exchange(url, HttpMethod.PUT, createRequestEntity(entity), responseType);
-  }
-
-  protected <T> ResponseEntity<T> exchangeDeleteWithoutAuth(String url, Class<T> responseType) {
-    return testRestTemplate.exchange(url, HttpMethod.DELETE, createRequestEntity(), responseType);
   }
 }

@@ -1,5 +1,6 @@
 package com.sedliarov.learningtable.integration;
 
+import com.sedliarov.learningtable.controller.StudentController;
 import com.sedliarov.learningtable.mapper.StudentMapper;
 import com.sedliarov.learningtable.model.dto.StudentDto;
 import com.sedliarov.learningtable.model.entity.Student;
@@ -10,15 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 /**
- * Student integration controller with rest api tests.
+ * Integration tests for {@link StudentController}.
  *
  * @author Kirill Sedliarov
  */
@@ -26,6 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String STUDENTS_URL = "/students/";
+
+  private static final String FIRST_NAME_ARIA = "Aria";
+
+  private static final String SECOND_NAME_ARIEVNA = "Arievna";
+
+  private static final String FIRST_NAME_MARIA = "Maria";
+
+  private static final String SECOND_NAME_SHARAPOVA = "Sharapova";
 
   @Autowired
   private StudentRepository studentRepository;
@@ -35,44 +43,40 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Test
   void testGetStudentById() {
-
     // given
     Student studentForSave = StudentFixture.createEntity();
     Student savedStudent = studentRepository.save(studentForSave);
-    StudentDto studentMapper = mapper.entityToDto(savedStudent);
+    StudentDto expectedStudent = mapper.entityToDto(savedStudent);
 
     // when
-    ResponseEntity<StudentDto> student =
+    ResponseEntity<StudentDto> response =
         exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
 
     // then
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(student.getBody()).isEqualTo(studentMapper);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isEqualTo(expectedStudent);
   }
 
   @Test
-  void negativeTestGetStudentById() {
-
+  void testGetStudentByIdIfUserNotExist() {
     // given
-    Student newStudent = StudentFixture.createEntityWithId(UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a"));
-    Student savedStudent = studentRepository.save(newStudent);
-    StudentDto studentMapper = mapper.entityToDto(newStudent);
+    Student newStudent = StudentFixture.createEntity();
 
     // when
-    ResponseEntity<StudentDto> student =
-        exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
+    ResponseEntity<StudentDto> response =
+        exchangeGetWithoutAuth(STUDENTS_URL + newStudent.getStudentId(), StudentDto.class);
 
     // then
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(student.getBody()).isNotEqualTo(studentMapper);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
   @Test
   void testGetStudents() {
-
     // given
-    Student student = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria", "Arievna"));
-    Student student1 = studentRepository.save(StudentFixture.createEntityWithFirstAndSecondName("Aria1", "Arievna1"));
+    Student student = studentRepository.save(StudentFixture
+        .createEntityWithFirstAndSecondName(FIRST_NAME_ARIA, SECOND_NAME_ARIEVNA));
+    Student student1 = studentRepository.save(StudentFixture
+        .createEntityWithFirstAndSecondName(FIRST_NAME_MARIA, SECOND_NAME_SHARAPOVA));
     List<StudentDto> expectedStudents = List.of(mapper.entityToDto(student), mapper.entityToDto(student1));
 
     // when
@@ -84,119 +88,110 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   }
 
   @Test
-  void negativeTestGetStudents() {
-
-    // given
-    List<StudentDto> expectedStudents = new ArrayList<>();
-
+  void testGetStudentsIfNoUsers() {
     // when
     ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(response.getBody()).containsExactlyElementsOf(expectedStudents);
+    assertSoftly(softly -> {
+      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+      softly.assertThat(response.getBody()).containsExactlyElementsOf(Collections.emptyList());
+    });
   }
 
   @Test
   void testCreateStudent() {
-
     // given
-    StudentDto newStudent = StudentFixture.createDto();
+    StudentDto expectedStudent = StudentFixture.createDto();
 
     // when
-    ResponseEntity<StudentDto> student =
-        exchangeAddWithoutAuth(STUDENTS_URL, newStudent, StudentDto.class);
+    ResponseEntity<StudentDto> response =
+        exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, StudentDto.class);
 
     // then
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-    assertThat(student.getBody().getFirstName()).isEqualTo(newStudent.getFirstName());
-    assertThat(student.getBody().getSecondName()).isEqualTo(newStudent.getSecondName());
-    assertThat(student.getBody().getNote()).isEqualTo(newStudent.getNote());
-    assertThat(student.getBody().getGroup()).isEqualTo(newStudent.getGroup());
+    expectedStudent.setStudentId(response.getBody().getStudentId());
+    assertSoftly(softly -> {
+      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+      softly.assertThat(response.getBody()).isEqualTo(expectedStudent);
+    });
   }
 
   @Test
-  void negativeTestCreateStudent() {
-
+  void testCreateExistStudent() {
     // given
-    StudentDto newStudent = StudentFixture.createDto();
+    Student studentForSave = StudentFixture.createEntity();
+    Student savedStudent = studentRepository.save(studentForSave);
+    StudentDto expectedStudent = mapper.entityToDto(savedStudent);
 
     // when
-    ResponseEntity<StudentDto> student =
-        exchangeAddWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), newStudent, StudentDto.class);
+    ResponseEntity<StudentDto> response =
+        exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, StudentDto.class);
 
     // then
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
+    assertSoftly(softly -> {
+      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+      softly.assertThat(response.getBody()).isEqualTo(expectedStudent);
+    });
   }
 
   @Test
   void testDeleteStudent() {
-
     // given
-    Student newStudent = StudentFixture.createEntity();
-    studentRepository.save(newStudent);
+    Student studentForSave = StudentFixture.createEntity();
+    studentRepository.save(studentForSave);
 
     // when
-    ResponseEntity<StudentDto> student =
-        exchangeDeleteWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), StudentDto.class);
+    ResponseEntity<StudentDto> response =
+        exchangeDeleteWithoutAuth(STUDENTS_URL + "/" + studentForSave.getStudentId(), StudentDto.class);
 
     // then
-    ResponseEntity<StudentDto> check =
-        exchangeGetWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), StudentDto.class);
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.OK);
-    assertThat(check.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
   }
 
   @Test
-  void negativeTestDeleteStudent() {
-
+  void testDeleteWithoutId() {
     // given
     studentRepository.save(StudentFixture.createEntity());
 
     // when
-    ResponseEntity<StudentDto> student =
+    ResponseEntity<StudentDto> response =
         exchangeDeleteWithoutAuth(STUDENTS_URL, StudentDto.class);
 
     // then
-    ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
-    List<StudentDto> students = Arrays.stream(response.getBody()).toList();
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
-    assertThat(students).isNotEmpty();
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
   }
 
   @Test
   void testUpdateStudent() {
-
     // given
-    Student newStudent = StudentFixture.createEntity();
-    Student savedStudent = studentRepository.save(newStudent);
-    StudentDto newStudentDto = StudentFixture.createDtoWithFirstAndSecondName("Maria", "Sharapova");
+    Student studentForSave = StudentFixture.createEntity();
+    studentRepository.save(studentForSave);
+    StudentDto studentDtoForUpdate =
+        StudentFixture.createDtoWithFirstAndSecondName(FIRST_NAME_MARIA, SECOND_NAME_SHARAPOVA);
 
     // when
-    ResponseEntity<StudentDto> student =
-        exchangeUpdateWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), newStudentDto, StudentDto.class);
+    ResponseEntity<StudentDto> response =
+        exchangePutWithoutAuth(STUDENTS_URL + "/" + studentForSave.getStudentId(),
+            studentDtoForUpdate,
+            StudentDto.class);
 
     // then
-    ResponseEntity<StudentDto> check =
-        exchangeGetWithoutAuth(STUDENTS_URL + "/" + newStudent.getStudentId(), StudentDto.class);
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-    assertThat(savedStudent.getStudentId()).isEqualTo(check.getBody().getStudentId());
-    assertThat(check.getBody().getFirstName()).isEqualTo("Maria");
-    assertThat(check.getBody().getSecondName()).isEqualTo("Sharapova");
-    assertThat(check.getBody().getNote()).isEqualTo(savedStudent.getNote());
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 
   @Test
-  void negativeTestUpdateStudent() {
-
+  void testUpdateStudentIfNotExist() {
     // given
-    StudentDto newStudentDto = StudentFixture.createDtoWithFirstAndSecondName("Maria", "Sharapova");
+    StudentDto studentDtoToCheck =
+        StudentFixture.createDtoWithFirstAndSecondName(FIRST_NAME_MARIA, SECOND_NAME_SHARAPOVA);
 
     // when
-    ResponseEntity<StudentDto> student =
-        exchangeUpdateWithoutAuth(STUDENTS_URL + "/" + newStudentDto.getStudentId(), newStudentDto, StudentDto.class);
+    ResponseEntity<StudentDto> response =
+        exchangePutWithoutAuth(STUDENTS_URL + "/" + studentDtoToCheck.getStudentId(),
+            studentDtoToCheck,
+            StudentDto.class);
 
     // then
-    assertThat(student.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 }
