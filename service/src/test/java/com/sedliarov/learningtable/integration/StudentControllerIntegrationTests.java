@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -26,6 +27,8 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String STUDENTS_URL = "/students/";
+
+  private static final UUID STUDENT_UUID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
 
   private static final String FIRST_NAME_ARIA = "Aria";
 
@@ -59,15 +62,12 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Test
   void testGetStudentByIdIfUserNotExist() {
-    // given
-    Student newStudent = StudentFixture.createEntity();
-
     // when
     ResponseEntity<StudentDto> response =
-        exchangeGetWithoutAuth(STUDENTS_URL + newStudent.getStudentId(), StudentDto.class);
+        exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @Test
@@ -93,31 +93,27 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
 
     // then
-    assertSoftly(softly -> {
-      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-      softly.assertThat(response.getBody()).containsExactlyElementsOf(Collections.emptyList());
-    });
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).containsExactlyElementsOf(Collections.emptyList());
   }
 
   @Test
   void testCreateStudent() {
     // given
-    StudentDto expectedStudent = StudentFixture.createDto();
+    StudentDto studentForCreate = StudentFixture.createDto();
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, StudentDto.class);
+        exchangePostWithoutAuth(STUDENTS_URL, studentForCreate, StudentDto.class);
 
     // then
-    expectedStudent.setStudentId(response.getBody().getStudentId());
-    assertSoftly(softly -> {
-      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-      softly.assertThat(response.getBody()).isEqualTo(expectedStudent);
-    });
+    studentForCreate.setStudentId(response.getBody().getStudentId());
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    assertThat(response.getBody()).isEqualTo(studentForCreate);
   }
 
   @Test
-  void testCreateExistStudent() {
+  void testCreateStudentIfExist() {
     // given
     Student studentForSave = StudentFixture.createEntity();
     Student savedStudent = studentRepository.save(studentForSave);
@@ -128,10 +124,8 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, StudentDto.class);
 
     // then
-    assertSoftly(softly -> {
-      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-      softly.assertThat(response.getBody()).isEqualTo(expectedStudent);
-    });
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+    assertThat(response.getBody()).isEqualTo(expectedStudent);
   }
 
   @Test
@@ -142,7 +136,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangeDeleteWithoutAuth(STUDENTS_URL + "/" + studentForSave.getStudentId(), StudentDto.class);
+        exchangeDeleteWithoutAuth(STUDENTS_URL + studentForSave.getStudentId(), StudentDto.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -155,28 +149,36 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangeDeleteWithoutAuth(STUDENTS_URL, StudentDto.class);
+        exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.METHOD_NOT_ALLOWED);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
   @Test
   void testUpdateStudent() {
     // given
-    Student studentForSave = StudentFixture.createEntity();
-    studentRepository.save(studentForSave);
+    Student savedStudent = studentRepository.save(StudentFixture.createEntity());
     StudentDto studentDtoForUpdate =
         StudentFixture.createDtoWithFirstAndSecondName(FIRST_NAME_MARIA, SECOND_NAME_SHARAPOVA);
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangePutWithoutAuth(STUDENTS_URL + "/" + studentForSave.getStudentId(),
+        exchangePutWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(),
             studentDtoForUpdate,
             StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    ResponseEntity<StudentDto> checkResponse =
+        exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
+    assertSoftly(softly -> {
+      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+      softly.assertThat(checkResponse.getBody().getStudentId()).isEqualTo(savedStudent.getStudentId());
+      softly.assertThat(checkResponse.getBody().getSecondName()).isEqualTo(studentDtoForUpdate.getSecondName());
+      softly.assertThat(checkResponse.getBody().getFirstName()).isEqualTo(studentDtoForUpdate.getFirstName());
+      softly.assertThat(checkResponse.getBody().getNote()).isEqualTo(studentDtoForUpdate.getNote());
+      softly.assertThat(checkResponse.getBody().getGroup()).isEqualTo(studentDtoForUpdate.getGroup());
+    });
   }
 
   @Test
@@ -187,11 +189,11 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangePutWithoutAuth(STUDENTS_URL + "/" + studentDtoToCheck.getStudentId(),
+        exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID,
             studentDtoToCheck,
             StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
