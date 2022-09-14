@@ -25,11 +25,23 @@ public class StudentFixture {
     return new Student(null, FIRST_NAME, SECOND_NAME, NOTE, null);
   }
 
+  /**
+   * Method for create Student entity with unique id.
+   * @param id
+   * @return new object Student.
+   */
+
   public Student createEntityWithId(UUID id) {
     Student student = createEntity();
     student.setStudentId(id);
     return student;
   }
+
+  /**
+   * Method for create Student entity and set first name, second name.
+   * @param firstName,secondName
+   * @return new object Student.
+   */
 
   public Student createEntityWithFirstAndSecondName(String firstName, String secondName) {
     Student student = createEntity();
@@ -38,17 +50,35 @@ public class StudentFixture {
     return student;
   }
 
+  /**
+   * Method for create Student entity and set note.
+   * @param note
+   * @return new object Student.
+   */
+
   public Student createEntityWithNote(Double note) {
     Student student = createEntity();
     student.setNote(note);
     return student;
   }
 
+  /**
+   * Method for create Student entity and set group.
+   * @param group
+   * @return new object Student.
+   */
+
   public Student createEntityWithGroup(Group group) {
     Student student = createEntity();
     student.setGroup(group);
     return student;
   }
+
+  /**
+   * Method for create Student entity and set first name, second name, note.
+   * @param firstName,secondName,note
+   * @return new object Student.
+   */
 
   public Student createEntityWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
     Student student = createEntity();
@@ -57,6 +87,12 @@ public class StudentFixture {
     student.setNote(note);
     return student;
   }
+
+  /**
+   * Method for create Student entity and set first name, second name, note, group.
+   * @param firstName,secondName,note,group
+   * @return new object Student.
+   */
 
   public Student createEntityWithoutId(String firstName, String secondName, Double note, Group group) {
     Student student = createEntity();
@@ -71,11 +107,23 @@ public class StudentFixture {
     return new StudentDto(null, FIRST_NAME, SECOND_NAME, NOTE, null);
   }
 
+  /**
+   * Method for create Student dto and set unique id.
+   * @param id
+   * @return new object StudentDto.
+   */
+
   public StudentDto createDtoWithId(UUID id) {
     StudentDto student = createDto();
     student.setStudentId(id);
     return student;
   }
+
+  /**
+   * Method for create Student dto and set first name, second name.
+   * @param firstName,secondName
+   * @return new object StudentDto.
+   */
 
   public StudentDto createDtoWithFirstAndSecondName(String firstName, String secondName) {
     StudentDto studentDto = createDto();
@@ -84,17 +132,35 @@ public class StudentFixture {
     return studentDto;
   }
 
+  /**
+   * Method for create Student dto and set note.
+   * @param note
+   * @return new object StudentDto.
+   */
+
   public StudentDto createDtoWithNote(Double note) {
     StudentDto studentDto = createDto();
     studentDto.setNote(note);
     return studentDto;
   }
 
+  /**
+   * Method for create Student dto and set group.
+   * @param group
+   * @return new object StudentDto.
+   */
+
   public StudentDto createDtoWithGroup(Group group) {
     StudentDto studentDto = createDto();
     studentDto.setGroup(group);
     return studentDto;
   }
+
+  /**
+   * Method for create Student dto and first name, second name, note.
+   * @param firstName,secondName,note
+   * @return new object StudentDto.
+   */
 
   public StudentDto createDtoWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
     StudentDto studentDto = createDto();
@@ -103,6 +169,12 @@ public class StudentFixture {
     studentDto.setNote(note);
     return studentDto;
   }
+
+  /**
+   * Method for create Student dto and first name, second name, note, group.
+   * @param firstName,secondName,note,group
+   * @return new object StudentDto.
+   */
 
   public StudentDto createDtoWithoutId(String firstName, String secondName, Double note, Group group) {
     StudentDto studentDto = createDto();
