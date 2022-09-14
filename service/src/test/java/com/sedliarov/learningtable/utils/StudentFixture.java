@@ -27,8 +27,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student entity with unique id.
-   * @param id
-   * @return new object Student.
    */
 
   public Student createEntityWithId(UUID id) {
@@ -39,8 +37,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student entity and set first name, second name.
-   * @param firstName,secondName
-   * @return new object Student.
    */
 
   public Student createEntityWithFirstAndSecondName(String firstName, String secondName) {
@@ -52,8 +48,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student entity and set note.
-   * @param note
-   * @return new object Student.
    */
 
   public Student createEntityWithNote(Double note) {
@@ -64,8 +58,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student entity and set group.
-   * @param group
-   * @return new object Student.
    */
 
   public Student createEntityWithGroup(Group group) {
@@ -76,8 +68,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student entity and set first name, second name, note.
-   * @param firstName,secondName,note
-   * @return new object Student.
    */
 
   public Student createEntityWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
@@ -90,8 +80,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student entity and set first name, second name, note, group.
-   * @param firstName,secondName,note,group
-   * @return new object Student.
    */
 
   public Student createEntityWithoutId(String firstName, String secondName, Double note, Group group) {
@@ -109,8 +97,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student dto and set unique id.
-   * @param id
-   * @return new object StudentDto.
    */
 
   public StudentDto createDtoWithId(UUID id) {
@@ -121,8 +107,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student dto and set first name, second name.
-   * @param firstName,secondName
-   * @return new object StudentDto.
    */
 
   public StudentDto createDtoWithFirstAndSecondName(String firstName, String secondName) {
@@ -134,8 +118,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student dto and set note.
-   * @param note
-   * @return new object StudentDto.
    */
 
   public StudentDto createDtoWithNote(Double note) {
@@ -146,8 +128,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student dto and set group.
-   * @param group
-   * @return new object StudentDto.
    */
 
   public StudentDto createDtoWithGroup(Group group) {
@@ -158,8 +138,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student dto and first name, second name, note.
-   * @param firstName,secondName,note
-   * @return new object StudentDto.
    */
 
   public StudentDto createDtoWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
@@ -172,8 +150,6 @@ public class StudentFixture {
 
   /**
    * Method for create Student dto and first name, second name, note, group.
-   * @param firstName,secondName,note,group
-   * @return new object StudentDto.
    */
 
   public StudentDto createDtoWithoutId(String firstName, String secondName, Double note, Group group) {
