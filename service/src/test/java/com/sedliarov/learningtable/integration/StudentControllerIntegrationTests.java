@@ -1,6 +1,5 @@
 package com.sedliarov.learningtable.integration;
 
-import com.sedliarov.learningtable.controller.StudentController;
 import com.sedliarov.learningtable.mapper.StudentMapper;
 import com.sedliarov.learningtable.model.dto.StudentDto;
 import com.sedliarov.learningtable.model.entity.Student;
