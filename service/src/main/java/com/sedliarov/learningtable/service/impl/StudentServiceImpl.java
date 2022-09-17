@@ -56,8 +56,8 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public StudentDto getStudentById(UUID id) {
-    return mapper.entityToDto(repository.findById(id)
-        .orElseThrow(() -> new CustomEntityNotFoundException("Entity not found with id " + id)));
+    return mapper.entityToDto(repository.findById(id).orElseThrow(()
+        -> new CustomEntityNotFoundException("Entity not found with id " + id)));
   }
 
   @Override
@@ -65,6 +65,9 @@ public class StudentServiceImpl implements StudentService {
     return repository.findAll().stream().map(mapper::entityToDto).toList();
   }
 
+  /**
+   * Exception for GET response if student not found.
+   */
   @ResponseStatus(value = HttpStatus.NOT_FOUND)
   public class CustomEntityNotFoundException extends EntityNotFoundException {
 
@@ -73,6 +76,9 @@ public class StudentServiceImpl implements StudentService {
     }
   }
 
+  /**
+   * Exception for DELETE response if student not found.
+   */
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public class DeleteEntityNotFoundException extends EntityNotFoundException {
 
@@ -81,6 +87,9 @@ public class StudentServiceImpl implements StudentService {
     }
   }
 
+  /**
+   * Exception for UPDATE response if student not found.
+   */
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public class UpdateEntityNotFoundException extends EntityNotFoundException {
 
@@ -89,6 +98,9 @@ public class StudentServiceImpl implements StudentService {
     }
   }
 
+  /**
+   * Exception for POST response if student already exist.
+   */
   @ResponseStatus(value = HttpStatus.BAD_REQUEST)
   public class EntityAlreadyExistsException extends HttpMessageNotWritableException {
 
