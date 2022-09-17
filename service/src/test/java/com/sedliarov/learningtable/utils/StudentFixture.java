@@ -28,7 +28,6 @@ public class StudentFixture {
   /**
    * Method for create Student entity with unique id.
    */
-
   public Student createEntityWithId(UUID id) {
     Student student = createEntity();
     student.setStudentId(id);
@@ -38,7 +37,6 @@ public class StudentFixture {
   /**
    * Method for create Student entity and set first name, second name.
    */
-
   public Student createEntityWithFirstAndSecondName(String firstName, String secondName) {
     Student student = createEntity();
     student.setFirstName(firstName);
@@ -49,7 +47,6 @@ public class StudentFixture {
   /**
    * Method for create Student entity and set note.
    */
-
   public Student createEntityWithNote(Double note) {
     Student student = createEntity();
     student.setNote(note);
@@ -59,7 +56,6 @@ public class StudentFixture {
   /**
    * Method for create Student entity and set group.
    */
-
   public Student createEntityWithGroup(Group group) {
     Student student = createEntity();
     student.setGroup(group);
@@ -69,7 +65,6 @@ public class StudentFixture {
   /**
    * Method for create Student entity and set first name, second name, note.
    */
-
   public Student createEntityWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
     Student student = createEntity();
     student.setFirstName(firstName);
@@ -81,7 +76,6 @@ public class StudentFixture {
   /**
    * Method for create Student entity and set first name, second name, note, group.
    */
-
   public Student createEntityWithoutId(String firstName, String secondName, Double note, Group group) {
     Student student = createEntity();
     student.setFirstName(firstName);
@@ -98,7 +92,6 @@ public class StudentFixture {
   /**
    * Method for create Student dto and set unique id.
    */
-
   public StudentDto createDtoWithId(UUID id) {
     StudentDto student = createDto();
     student.setStudentId(id);
@@ -108,7 +101,6 @@ public class StudentFixture {
   /**
    * Method for create Student dto and set first name, second name.
    */
-
   public StudentDto createDtoWithFirstAndSecondName(String firstName, String secondName) {
     StudentDto studentDto = createDto();
     studentDto.setFirstName(firstName);
@@ -119,7 +111,6 @@ public class StudentFixture {
   /**
    * Method for create Student dto and set note.
    */
-
   public StudentDto createDtoWithNote(Double note) {
     StudentDto studentDto = createDto();
     studentDto.setNote(note);
@@ -129,7 +120,6 @@ public class StudentFixture {
   /**
    * Method for create Student dto and set group.
    */
-
   public StudentDto createDtoWithGroup(Group group) {
     StudentDto studentDto = createDto();
     studentDto.setGroup(group);
@@ -139,7 +129,6 @@ public class StudentFixture {
   /**
    * Method for create Student dto and first name, second name, note.
    */
-
   public StudentDto createDtoWithFirstAndSecondNameAndNote(String firstName, String secondName, Double note) {
     StudentDto studentDto = createDto();
     studentDto.setFirstName(firstName);
@@ -151,7 +140,6 @@ public class StudentFixture {
   /**
    * Method for create Student dto and first name, second name, note, group.
    */
-
   public StudentDto createDtoWithoutId(String firstName, String secondName, Double note, Group group) {
     StudentDto studentDto = createDto();
     studentDto.setFirstName(firstName);
