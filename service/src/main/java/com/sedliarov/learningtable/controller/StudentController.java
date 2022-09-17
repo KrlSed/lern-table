@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import javax.validation.Valid;
 
 /**
  * REST controller for {@link StudentDto}.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @RestController
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class StudentController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public StudentDto createStudent(@RequestBody StudentDto studentDto) {
+  public StudentDto createStudent(@Valid @RequestBody StudentDto studentDto) {
     return service.createStudent(studentDto);
   }
 
@@ -43,19 +44,19 @@ public class StudentController {
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public StudentDto updateStudent(@PathVariable UUID id, @RequestBody StudentDto studentDto) {
+  public StudentDto updateStudent(@Valid @PathVariable UUID id, @Valid @RequestBody StudentDto studentDto) {
     return service.updateStudent(id, studentDto);
   }
 
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public StudentDto getStudentById(@PathVariable UUID id) {
+  public StudentDto getStudentById(@Valid @PathVariable UUID id) {
     return service.getStudentById(id);
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteStudent(@PathVariable UUID id) {
+  public void deleteStudent(@Valid @PathVariable UUID id) {
     service.deleteStudent(id);
   }
 }

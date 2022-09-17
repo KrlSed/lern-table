@@ -9,7 +9,9 @@ import java.util.UUID;
  * This student repository interface extend default {@link JpaRepository} with entity student
  * and unique id.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 public interface StudentRepository extends JpaRepository<Student, UUID> {
+
+  Student findBySecondName(String secondName);
 }

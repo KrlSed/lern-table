@@ -17,7 +17,7 @@ import javax.persistence.Table;
 /**
  * This object is entity student.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Entity
 @Table(name = "students")

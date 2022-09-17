@@ -66,7 +66,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
   }
 
   @Test
@@ -115,16 +115,15 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   void testCreateStudentIfExist() {
     // given
     Student studentForSave = StudentFixture.createEntity();
-    Student savedStudent = studentRepository.save(studentForSave);
-    StudentDto expectedStudent = mapper.entityToDto(savedStudent);
+    studentRepository.save(studentForSave);
+    StudentDto expectedStudent = mapper.entityToDto(studentForSave);
 
     // when
     ResponseEntity<StudentDto> response =
         exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-    assertThat(response.getBody()).isEqualTo(expectedStudent);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
   @Test
@@ -143,15 +142,12 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Test
   void testDeleteWithoutId() {
-    // given
-    studentRepository.save(StudentFixture.createEntity());
-
     // when
     ResponseEntity<StudentDto> response =
         exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 
   @Test
@@ -193,6 +189,6 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
             StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 }
