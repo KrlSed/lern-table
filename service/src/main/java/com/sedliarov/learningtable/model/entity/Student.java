@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * This object is entity student.
@@ -20,7 +21,8 @@ import javax.persistence.Table;
  * @author Kirill Sedliarov
  */
 @Entity
-@Table(name = "students")
+@Table(name = "students",uniqueConstraints =
+    {@UniqueConstraint(name = "UniqueFirstAndSecondName", columnNames = { "firstName", "secondName" })})
 @Getter
 @Setter
 @AllArgsConstructor
@@ -33,7 +35,6 @@ public class Student {
 
   private String firstName;
 
-  @Column(unique = true)
   private String secondName;
 
   private Double note;

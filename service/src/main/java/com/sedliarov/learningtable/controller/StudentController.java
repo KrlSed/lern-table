@@ -44,19 +44,19 @@ public class StudentController {
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public StudentDto updateStudent(@Valid @PathVariable UUID id, @Valid @RequestBody StudentDto studentDto) {
+  public StudentDto updateStudent(@PathVariable UUID id, @Valid @RequestBody StudentDto studentDto) {
     return service.updateStudent(id, studentDto);
   }
 
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public StudentDto getStudentById(@Valid @PathVariable UUID id) {
+  public StudentDto getStudentById(@PathVariable UUID id) {
     return service.getStudentById(id);
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteStudent(@Valid @PathVariable UUID id) {
+  public void deleteStudent(@PathVariable UUID id) {
     service.deleteStudent(id);
   }
 }

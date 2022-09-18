@@ -3,6 +3,7 @@ package com.sedliarov.learningtable.repository;
 import com.sedliarov.learningtable.model.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -13,5 +14,5 @@ import java.util.UUID;
  */
 public interface StudentRepository extends JpaRepository<Student, UUID> {
 
-  Student findBySecondName(String secondName);
+  Optional<Student> findBySecondNameAndFirstName(String secondName, String firstName);
 }
