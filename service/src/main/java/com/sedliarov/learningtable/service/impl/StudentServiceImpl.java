@@ -10,17 +10,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.EntityNotFoundException;
 
 /**
  * Implementation for {@link StudentService}.
@@ -40,8 +37,9 @@ public class StudentServiceImpl implements StudentService {
     Student studentToSave = mapper.dtoToEntity(studentDto);
     boolean studentExist = repository.findBySecondNameAndFirstName(studentToSave.getSecondName(),
         studentToSave.getFirstName()).isPresent();
-    if (studentExist)
-        throw new IllegalArgumentException("Entity already exist");
+    if (studentExist) {
+      throw new IllegalArgumentException("Entity already exist");
+    }
     return mapper.entityToDto(repository.save(studentToSave));
   }
 
@@ -80,7 +78,7 @@ public class StudentServiceImpl implements StudentService {
       extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value
-        = { IllegalArgumentException.class, IllegalStateException.class })
+        = {IllegalArgumentException.class, IllegalStateException.class})
     protected ResponseEntity<Object> handleBadRequest(
         RuntimeException ex, WebRequest request) {
       Student bodyOfResponse = new Student();
@@ -96,5 +94,4 @@ public class StudentServiceImpl implements StudentService {
           new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
   }
-
 }

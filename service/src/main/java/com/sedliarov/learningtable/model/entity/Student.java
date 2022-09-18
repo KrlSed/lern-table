@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,8 +20,8 @@ import javax.persistence.UniqueConstraint;
  * @author Kirill Sedliarov
  */
 @Entity
-@Table(name = "students",uniqueConstraints =
-    {@UniqueConstraint(name = "UniqueFirstAndSecondName", columnNames = { "firstName", "secondName" })})
+@Table(name = "students",
+    uniqueConstraints = @UniqueConstraint(name = "UniqueFirstAndSecondName", columnNames = {"firstName", "secondName"}))
 @Getter
 @Setter
 @AllArgsConstructor
