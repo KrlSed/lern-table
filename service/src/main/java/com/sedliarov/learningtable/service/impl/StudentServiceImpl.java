@@ -71,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
   }
 
   /**
-   * Corrected basic handlers for api
+   * Corrected basic handlers for api.
    */
   @ControllerAdvice
   public class RestResponseEntityExceptionHandler
