@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * Corrected basic handlers for api.
+ *
+ * @author Kirill Sedliarov
  */
 @RestControllerAdvice
 public class RestResponseEntityExceptionHandle {

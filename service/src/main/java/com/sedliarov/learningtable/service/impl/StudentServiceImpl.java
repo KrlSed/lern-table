@@ -48,8 +48,7 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public void deleteStudent(UUID id) {
-    repository.findById(id).orElseThrow(()
-        -> new IllegalArgumentException("Entity not delete because not existed"));
+    repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Entity not delete because not existed"));
     repository.deleteById(id);
   }
 
@@ -63,6 +62,4 @@ public class StudentServiceImpl implements StudentService {
   public List<StudentDto> getStudents() {
     return repository.findAll().stream().map(mapper::entityToDto).toList();
   }
-
-
 }
