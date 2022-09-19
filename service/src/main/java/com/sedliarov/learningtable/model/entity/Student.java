@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,13 +33,15 @@ public class Student {
   @GeneratedValue
   private UUID studentId;
 
+  @Column(nullable = false)
   private String firstName;
 
+  @Column(nullable = false)
   private String secondName;
 
   private Double note;
 
   @ManyToOne
-  @JoinColumn(name = "group_id", nullable = true)
+  @JoinColumn(name = "group_id")
   private Group group;
 }

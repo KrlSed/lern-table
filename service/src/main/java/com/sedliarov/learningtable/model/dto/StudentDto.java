@@ -4,10 +4,11 @@ import com.sedliarov.learningtable.model.entity.Group;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import java.io.Serializable;
 import java.util.UUID;
-
+import javax.validation.constraints.NotNull;
 
 /**
  * This object is student DTO.
@@ -21,8 +22,10 @@ public class StudentDto implements Serializable {
 
   private UUID studentId;
 
+  @NotNull
   private String firstName;
 
+  @NotNull
   private String secondName;
 
   private Double note;

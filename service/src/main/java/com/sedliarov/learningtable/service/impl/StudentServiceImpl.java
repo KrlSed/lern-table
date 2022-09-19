@@ -7,16 +7,10 @@ import com.sedliarov.learningtable.model.entity.Student;
 import com.sedliarov.learningtable.repository.StudentRepository;
 import com.sedliarov.learningtable.service.StudentService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -34,12 +28,13 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public StudentDto createStudent(StudentDto studentDto) {
-    Student studentToSave = mapper.dtoToEntity(studentDto);
-    boolean studentExist = repository.findBySecondNameAndFirstName(studentToSave.getSecondName(),
-        studentToSave.getFirstName()).isPresent();
-    if (studentExist) {
+    Optional<Student> student = repository.findBySecondNameAndFirstName(studentDto.getSecondName(),
+        studentDto.getFirstName());
+    if (student.isPresent()) {
       throw new IllegalArgumentException("Entity already exist");
     }
+
+    Student studentToSave = mapper.dtoToEntity(studentDto);
     return mapper.entityToDto(repository.save(studentToSave));
   }
 
@@ -70,28 +65,5 @@ public class StudentServiceImpl implements StudentService {
     return repository.findAll().stream().map(mapper::entityToDto).toList();
   }
 
-  /**
-   * Corrected basic handlers for api.
-   */
-  @ControllerAdvice
-  public class RestResponseEntityExceptionHandler
-      extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value
-        = {IllegalArgumentException.class, IllegalStateException.class})
-    protected ResponseEntity<Object> handleBadRequest(
-        RuntimeException ex, WebRequest request) {
-      Student bodyOfResponse = new Student();
-      return handleExceptionInternal(ex, bodyOfResponse,
-          new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
-
-    @ExceptionHandler(value = NotFoundException.class)
-    protected ResponseEntity<Object> handleNotFound(
-        RuntimeException ex, WebRequest request) {
-      Student bodyOfResponse = new Student();
-      return handleExceptionInternal(ex, bodyOfResponse,
-          new HttpHeaders(), HttpStatus.NOT_FOUND, request);
-    }
-  }
 }
