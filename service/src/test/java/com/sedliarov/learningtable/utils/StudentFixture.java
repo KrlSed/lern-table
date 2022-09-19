@@ -12,7 +12,6 @@ import java.util.UUID;
  *
  * @author  Kirill Sedliarov
  */
-
 @UtilityClass
 public class StudentFixture {
 

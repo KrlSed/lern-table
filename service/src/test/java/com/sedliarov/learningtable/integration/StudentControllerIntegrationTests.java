@@ -22,7 +22,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
  *
  * @author Kirill Sedliarov
  */
-
 public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String STUDENTS_URL = "/students/";

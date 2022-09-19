@@ -4,7 +4,9 @@ import com.github.dockerjava.api.exception.NotFoundException;
 import com.sedliarov.learningtable.mapper.StudentMapper;
 import com.sedliarov.learningtable.model.dto.StudentDto;
 import com.sedliarov.learningtable.model.entity.Student;
+import com.sedliarov.learningtable.model.enums.MessageCode;
 import com.sedliarov.learningtable.repository.StudentRepository;
+import com.sedliarov.learningtable.service.MessageService;
 import com.sedliarov.learningtable.service.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,12 +28,17 @@ public class StudentServiceImpl implements StudentService {
 
   private final StudentMapper mapper;
 
+  private final MessageService messageService;
+
+  private final String ENTITY_CLASS_NAME = "Student";
+
   @Override
   public StudentDto createStudent(StudentDto studentDto) {
     Optional<Student> student = repository.findBySecondNameAndFirstName(studentDto.getSecondName(),
         studentDto.getFirstName());
     if (student.isPresent()) {
-      throw new IllegalArgumentException("Entity already exist");
+      throw new IllegalArgumentException(messageService.getMessage(MessageCode.ALREADY_EXIST, ENTITY_CLASS_NAME,
+          studentDto.getFirstName(), studentDto.getSecondName()));
     }
 
     Student studentToSave = mapper.dtoToEntity(studentDto);
@@ -40,7 +47,8 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public StudentDto updateStudent(UUID id, StudentDto studentDto) {
-    repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Entity for update not found"));
+    repository.findById(id).orElseThrow(()
+        -> new IllegalArgumentException(messageService.getMessage(MessageCode.NOT_FOUND, ENTITY_CLASS_NAME, id)));
     Student studentToUpdate = mapper.dtoToEntity(studentDto);
     studentToUpdate.setStudentId(id);
     return mapper.entityToDto(repository.save(studentToUpdate));
@@ -48,14 +56,15 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public void deleteStudent(UUID id) {
-    repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Entity not delete because not existed"));
+    repository.findById(id).orElseThrow(()
+        -> new IllegalArgumentException(messageService.getMessage(MessageCode.NOT_DELETED, ENTITY_CLASS_NAME, id)));
     repository.deleteById(id);
   }
 
   @Override
   public StudentDto getStudentById(UUID id) {
     return mapper.entityToDto(repository.findById(id).orElseThrow(()
-        -> new NotFoundException("Entity not found with id " + id)));
+        -> new NotFoundException(messageService.getMessage(MessageCode.NOT_FOUND, ENTITY_CLASS_NAME, id))));
   }
 
   @Override
