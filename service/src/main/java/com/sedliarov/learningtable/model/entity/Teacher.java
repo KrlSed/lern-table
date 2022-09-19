@@ -15,10 +15,10 @@ import javax.persistence.Table;
 /**
  * This object is entity teacher.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Entity
-@Table(name = "teachers")
+@Table(name = "teacher")
 @Getter
 @Setter
 @AllArgsConstructor

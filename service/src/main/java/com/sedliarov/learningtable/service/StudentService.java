@@ -8,7 +8,7 @@ import java.util.UUID;
 /**
  * Student service with necessary REST api methods.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 public interface StudentService {
 

@@ -1,7 +1,19 @@
-# Getting Started
+# About project
 
 
-### DOCKER STARTt
+### Learning table
 
-docker run --name new-postgres --volume db-data:/var/lib/postgresql/data -e 
-POSTGRES_PASSWORD=specialpass -e POSTGRES_DB=payservice -p 5434:5432 postgres:12-alpine
+REST Api uses Postgres Sql that works in testconteiner.
+Service created with MVC pattern, Spring Boot and Spring JPA. For test used spring boot test, junit and mockito. Based
+on Java 17 and Maven.
+
+### Dependencies
+
+        - Spring Boot
+            - Spring JPA
+            - Lombok
+            - Testcontainers
+                - Postgres SQL
+            - Mapstruct
+            - Checkstyle
+            - Assertj

@@ -12,11 +12,10 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
-
 /**
  * Implementation for {@link TeacherService}.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Service
 @AllArgsConstructor
@@ -24,7 +23,7 @@ public class TeacherServiceImpl implements TeacherService {
 
   private final TeacherRepository repository;
 
-  private final TeacherMapper mapper = TeacherMapper.INSTANCE;
+  private final TeacherMapper mapper;
 
   @Override
   public TeacherDto createTeacher(TeacherDto teacherDto) {

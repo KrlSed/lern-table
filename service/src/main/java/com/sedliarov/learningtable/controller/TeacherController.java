@@ -59,4 +59,3 @@ public class TeacherController {
     service.deleteTeacher(id);
   }
 }
-
