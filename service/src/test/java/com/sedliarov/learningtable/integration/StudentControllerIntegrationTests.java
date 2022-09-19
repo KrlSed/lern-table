@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 /**
- * Integration tests for {@link StudentController}.
+ * Integration tests for {@link com.sedliarov.learningtable.controller.StudentController}.
  *
  * @author Kirill Sedliarov
  */

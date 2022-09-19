@@ -40,8 +40,7 @@ public class StudentServiceImpl implements StudentService {
 
   @Override
   public StudentDto updateStudent(UUID id, StudentDto studentDto) {
-    repository.findById(id).orElseThrow(()
-        -> new IllegalArgumentException("Entity for update not found"));
+    repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Entity for update not found"));
     Student studentToUpdate = mapper.dtoToEntity(studentDto);
     studentToUpdate.setStudentId(id);
     return mapper.entityToDto(repository.save(studentToUpdate));
