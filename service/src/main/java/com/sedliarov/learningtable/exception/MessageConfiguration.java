@@ -18,6 +18,9 @@ import java.util.Locale;
 @Configuration
 public class MessageConfiguration {
 
+  /**
+   * Source configuration.
+   */
   @Bean
   public MessageSource messageSource() {
     ReloadableResourceBundleMessageSource messageSource
@@ -28,6 +31,9 @@ public class MessageConfiguration {
     return messageSource;
   }
 
+  /**
+   * Creating validator
+   */
   @Bean
   public LocalValidatorFactoryBean getValidator() {
     LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
@@ -35,6 +41,9 @@ public class MessageConfiguration {
     return bean;
   }
 
+  /**
+   * Set localization
+   */
   @Bean
   public LocaleResolver localeResolver() {
     SessionLocaleResolver localeResolver = new SessionLocaleResolver();

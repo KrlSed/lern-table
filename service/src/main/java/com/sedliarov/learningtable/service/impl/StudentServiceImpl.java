@@ -30,7 +30,10 @@ public class StudentServiceImpl implements StudentService {
 
   private final MessageService messageService;
 
-  private final String ENTITY_CLASS_NAME = "Student";
+  /**
+   * Static value for exception message
+   */
+  public static final String ENTITY_CLASS_NAME = "Student";
 
   @Override
   public StudentDto createStudent(StudentDto studentDto) {
