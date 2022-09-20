@@ -13,17 +13,17 @@ import lombok.Getter;
 public enum MessageCode {
 
   /**
-   * Error not found linking in message.properties value message.not.found
+   * Error not found linking in messages.properties value message.not.found
    */
   NOT_FOUND("message.not.found"),
 
   /**
-   * Error not deleted linking in message.properties value message.not.deleted
+   * Error not deleted linking in messages.properties value message.not.deleted
    */
   NOT_DELETED("message.not.deleted"),
 
   /**
-   * Error already exist linking in message.properties value message.already.exist
+   * Error already exist linking in messages.properties value message.already.exist
    */
   ALREADY_EXIST("message.already.exist");
 
