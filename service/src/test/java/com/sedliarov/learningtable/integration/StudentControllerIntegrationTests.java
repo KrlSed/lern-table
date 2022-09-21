@@ -200,7 +200,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID, studentDtoToCheck, Error.class);
 
     // then
-    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
   }
 }
