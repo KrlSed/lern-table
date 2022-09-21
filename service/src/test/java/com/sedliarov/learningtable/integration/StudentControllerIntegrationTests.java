@@ -74,8 +74,8 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     // then
     System.out.println(response.getBody().getMessage());
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX +
-        messageService.getMessage(MessageCode.STUDENT_NOT_FOUND, STUDENT_UUID));
+    assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX
+        + messageService.getMessage(MessageCode.STUDENT_NOT_FOUND, STUDENT_UUID));
   }
 
   @Test
