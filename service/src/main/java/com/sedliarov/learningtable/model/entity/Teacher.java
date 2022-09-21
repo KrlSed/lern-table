@@ -6,11 +6,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * This object is entity teacher.
@@ -18,7 +20,8 @@ import javax.persistence.Table;
  * @author Kirill Sedliarov
  */
 @Entity
-@Table(name = "teacher")
+@Table(name = "teachers",
+    uniqueConstraints = @UniqueConstraint(name = "UniqueFirstAndSecondName", columnNames = {"firstName", "secondName"}))
 @Getter
 @Setter
 @AllArgsConstructor
@@ -29,8 +32,10 @@ public class Teacher {
   @GeneratedValue
   private UUID teacherId;
 
+  @Column(nullable = false)
   private String firstName;
 
+  @Column(nullable = false)
   private String secondName;
 
   private boolean isAdmin;

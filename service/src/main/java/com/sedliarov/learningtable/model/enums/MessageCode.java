@@ -20,7 +20,17 @@ public enum MessageCode {
   /**
    * Error already exist linking in messages.properties value error.student.already.exist
    */
-  ERROR_STUDENT_ALREADY_EXIST("error.student.already.exist");
+  ERROR_STUDENT_ALREADY_EXIST("error.student.already.exist"),
+
+  /**
+   * Error not found linking in messages.properties value error.teacher.not.found
+   */
+  ERROR_TEACHER_NOT_FOUND("error.teacher.not.found"),
+
+  /**
+   * Error already exist linking in messages.properties value error.teacher.already.exist
+   */
+  ERROR_TEACHER_ALREADY_EXIST("error.teacher.already.exist");
 
   private final String message;
 

@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import javax.validation.Valid;
 
 /**
  * REST controller for {@link TeacherDto}.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @RestController
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class TeacherController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public TeacherDto createTeacher(@RequestBody TeacherDto teacherDto) {
+  public TeacherDto createTeacher(@Valid @RequestBody TeacherDto teacherDto) {
     return service.createTeacher(teacherDto);
   }
 
@@ -43,7 +44,7 @@ public class TeacherController {
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public TeacherDto updateTeacher(@PathVariable UUID id, @RequestBody TeacherDto teacherDto) {
+  public TeacherDto updateTeacher(@PathVariable UUID id, @Valid @RequestBody TeacherDto teacherDto) {
     return service.updateTeacher(id, teacherDto);
   }
 
