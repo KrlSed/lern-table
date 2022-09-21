@@ -59,11 +59,11 @@ public class RestIntegrationTestBase {
     return testRestTemplate.getForEntity(url, responseType);
   }
 
-  protected <T> ResponseEntity<T> exchangePostWithoutAuth(String url, T entity, Class<T> responseType) {
+  protected <T, R> ResponseEntity<T> exchangePostWithoutAuth(String url, R entity, Class<T> responseType) {
     return testRestTemplate.postForEntity(url, entity, responseType);
   }
 
-  protected <T> ResponseEntity<T> exchangePutWithoutAuth(String url, T entity, Class<T> responseType) {
+  protected <T, R> ResponseEntity<T> exchangePutWithoutAuth(String url, R entity, Class<T> responseType) {
     return testRestTemplate.exchange(url, HttpMethod.PUT, createRequestEntity(entity), responseType);
   }
 

@@ -22,10 +22,19 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
  *
  * @author Kirill Sedliarov
  */
-
 public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String STUDENTS_URL = "/students/";
+
+  private static final String NOT_FOUND_PREFIX = "Status 404: ";
+
+  private static final String STUDENT_WITH_ID = "Student with id ";
+
+  private static final String STUDENT = "Student ";
+
+  private static final String NOT_FOUND = " not found";
+
+  private static final String NOT_CREATED_BECAUSE_ALREADY_EXIST = " not created because already exist";
 
   private static final UUID STUDENT_UUID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
 
@@ -62,11 +71,13 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   @Test
   void testGetStudentByIdIfUserNotExist() {
     // when
-    ResponseEntity<StudentDto> response =
-        exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
+    ResponseEntity<Error> response =
+        exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX + STUDENT_WITH_ID
+        + STUDENT_UUID + NOT_FOUND);
   }
 
   @Test
@@ -119,11 +130,14 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     StudentDto expectedStudent = mapper.entityToDto(studentForSave);
 
     // when
-    ResponseEntity<StudentDto> response =
-        exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, StudentDto.class);
+    ResponseEntity<Error> response =
+        exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody().getMessage())
+        .isEqualTo(STUDENT + expectedStudent.getFirstName() + " " + expectedStudent.getSecondName()
+            + NOT_CREATED_BECAUSE_ALREADY_EXIST);
   }
 
   @Test
@@ -143,11 +157,12 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   @Test
   void testDeleteIfNotExist() {
     // when
-    ResponseEntity<StudentDto> response =
-        exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
+    ResponseEntity<Error> response =
+        exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
   }
 
   @Test
@@ -159,9 +174,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangePutWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(),
-            studentDtoForUpdate,
-            StudentDto.class);
+        exchangePutWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), studentDtoForUpdate, StudentDto.class);
 
     // then
     ResponseEntity<StudentDto> checkResponse =
@@ -183,12 +196,11 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         StudentFixture.createDtoWithFirstAndSecondName(FIRST_NAME_MARIA, SECOND_NAME_SHARAPOVA);
 
     // when
-    ResponseEntity<StudentDto> response =
-        exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID,
-            studentDtoToCheck,
-            StudentDto.class);
+    ResponseEntity<Error> response =
+        exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID, studentDtoToCheck, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
   }
 }
