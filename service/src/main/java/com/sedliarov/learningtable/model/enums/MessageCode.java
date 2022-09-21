@@ -15,17 +15,12 @@ public enum MessageCode {
   /**
    * Error not found linking in messages.properties value error.student.not.found
    */
-  STUDENT_NOT_FOUND("error.student.not.found"),
-
-  /**
-   * Error not deleted linking in messages.properties value error.student.deleted
-   */
-  STUDENT_NOT_DELETED("error.student.not.deleted"),
+  ERROR_STUDENT_NOT_FOUND("error.student.not.found"),
 
   /**
    * Error already exist linking in messages.properties value error.student.already.exist
    */
-  STUDENT_ALREADY_EXIST("error.student.already.exist");
+  ERROR_STUDENT_ALREADY_EXIST("error.student.already.exist");
 
   private final String message;
 

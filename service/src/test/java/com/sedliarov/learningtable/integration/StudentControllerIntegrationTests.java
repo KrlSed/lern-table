@@ -3,9 +3,7 @@ package com.sedliarov.learningtable.integration;
 import com.sedliarov.learningtable.mapper.StudentMapper;
 import com.sedliarov.learningtable.model.dto.StudentDto;
 import com.sedliarov.learningtable.model.entity.Student;
-import com.sedliarov.learningtable.model.enums.MessageCode;
 import com.sedliarov.learningtable.repository.StudentRepository;
-import com.sedliarov.learningtable.service.MessageService;
 import com.sedliarov.learningtable.utils.StudentFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +28,14 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String NOT_FOUND_PREFIX = "Status 404: ";
 
+  private static final String STUDENT_WITH_ID = "Student with id ";
+
+  private static final String STUDENT = "Student ";
+
+  private static final String NOT_FOUND = " not found";
+
+  private static final String NOT_CREATED_BECAUSE_ALREADY_EXIST = " not created because already exist";
+
   private static final UUID STUDENT_UUID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
 
   private static final String FIRST_NAME_ARIA = "Aria";
@@ -45,9 +51,6 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Autowired
   private StudentMapper mapper;
-
-  @Autowired
-  private MessageService messageService;
 
   @Test
   void testGetStudentById() {
@@ -72,10 +75,9 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
 
     // then
-    System.out.println(response.getBody().getMessage());
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
-    assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX
-        + messageService.getMessage(MessageCode.STUDENT_NOT_FOUND, STUDENT_UUID));
+    assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX + STUDENT_WITH_ID
+        + STUDENT_UUID + NOT_FOUND);
   }
 
   @Test
@@ -132,10 +134,10 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, Error.class);
 
     // then
-    System.out.println(response.getBody());
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    assertThat(response.getBody().getMessage()).isEqualTo(messageService.getMessage(MessageCode.STUDENT_ALREADY_EXIST,
-        expectedStudent.getFirstName(), expectedStudent.getSecondName()));
+    assertThat(response.getBody().getMessage())
+        .isEqualTo(STUDENT + expectedStudent.getFirstName() + " " + expectedStudent.getSecondName()
+            + NOT_CREATED_BECAUSE_ALREADY_EXIST);
   }
 
   @Test
@@ -159,10 +161,8 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
 
     // then
-    System.out.println(response.getBody());
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    assertThat(response.getBody().getMessage()).isEqualTo(messageService.getMessage(MessageCode.STUDENT_NOT_DELETED,
-        STUDENT_UUID));
+    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
   }
 
   @Test
@@ -174,9 +174,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangePutWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(),
-            studentDtoForUpdate,
-            StudentDto.class);
+        exchangePutWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), studentDtoForUpdate, StudentDto.class);
 
     // then
     ResponseEntity<StudentDto> checkResponse =
@@ -199,14 +197,10 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<Error> response =
-        exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID,
-            studentDtoToCheck,
-            Error.class);
+        exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID, studentDtoToCheck, Error.class);
 
     // then
-    System.out.println(response.getBody());
-    assertThat(response.getBody().getMessage()).isEqualTo(messageService.getMessage(MessageCode.STUDENT_NOT_FOUND,
-        STUDENT_UUID));
+    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 }
