@@ -30,17 +30,12 @@ public class StudentServiceImpl implements StudentService {
 
   private final MessageService messageService;
 
-  /**
-   * Static value for exception message
-   */
-  public static final String ENTITY_CLASS_NAME = "Student";
-
   @Override
   public StudentDto createStudent(StudentDto studentDto) {
     Optional<Student> student = repository.findBySecondNameAndFirstName(studentDto.getSecondName(),
         studentDto.getFirstName());
     if (student.isPresent()) {
-      throw new IllegalArgumentException(messageService.getMessage(MessageCode.ALREADY_EXIST, ENTITY_CLASS_NAME,
+      throw new IllegalArgumentException(messageService.getMessage(MessageCode.STUDENT_ALREADY_EXIST,
           studentDto.getFirstName(), studentDto.getSecondName()));
     }
 
@@ -51,7 +46,7 @@ public class StudentServiceImpl implements StudentService {
   @Override
   public StudentDto updateStudent(UUID id, StudentDto studentDto) {
     repository.findById(id).orElseThrow(()
-        -> new IllegalArgumentException(messageService.getMessage(MessageCode.NOT_FOUND, ENTITY_CLASS_NAME, id)));
+        -> new IllegalArgumentException(messageService.getMessage(MessageCode.STUDENT_NOT_FOUND, id)));
     Student studentToUpdate = mapper.dtoToEntity(studentDto);
     studentToUpdate.setStudentId(id);
     return mapper.entityToDto(repository.save(studentToUpdate));
@@ -60,14 +55,14 @@ public class StudentServiceImpl implements StudentService {
   @Override
   public void deleteStudent(UUID id) {
     repository.findById(id).orElseThrow(()
-        -> new IllegalArgumentException(messageService.getMessage(MessageCode.NOT_DELETED, ENTITY_CLASS_NAME, id)));
+        -> new IllegalArgumentException(messageService.getMessage(MessageCode.STUDENT_NOT_DELETED, id)));
     repository.deleteById(id);
   }
 
   @Override
   public StudentDto getStudentById(UUID id) {
     return mapper.entityToDto(repository.findById(id).orElseThrow(()
-        -> new NotFoundException(messageService.getMessage(MessageCode.NOT_FOUND, ENTITY_CLASS_NAME, id))));
+        -> new NotFoundException(messageService.getMessage(MessageCode.STUDENT_NOT_FOUND, id))));
   }
 
   @Override

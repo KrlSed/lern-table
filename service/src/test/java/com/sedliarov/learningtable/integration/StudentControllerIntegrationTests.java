@@ -3,7 +3,9 @@ package com.sedliarov.learningtable.integration;
 import com.sedliarov.learningtable.mapper.StudentMapper;
 import com.sedliarov.learningtable.model.dto.StudentDto;
 import com.sedliarov.learningtable.model.entity.Student;
+import com.sedliarov.learningtable.model.enums.MessageCode;
 import com.sedliarov.learningtable.repository.StudentRepository;
+import com.sedliarov.learningtable.service.MessageService;
 import com.sedliarov.learningtable.utils.StudentFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String STUDENTS_URL = "/students/";
 
+  private static final String NOT_FOUND_PREFIX = "Status 404: ";
+
   private static final UUID STUDENT_UUID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
 
   private static final String FIRST_NAME_ARIA = "Aria";
@@ -41,6 +45,9 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   @Autowired
   private StudentMapper mapper;
+
+  @Autowired
+  private MessageService messageService;
 
   @Test
   void testGetStudentById() {
@@ -61,11 +68,14 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   @Test
   void testGetStudentByIdIfUserNotExist() {
     // when
-    ResponseEntity<StudentDto> response =
-        exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
+    ResponseEntity<Error> response =
+        exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
 
     // then
+    System.out.println(response.getBody().getMessage());
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX +
+        messageService.getMessage(MessageCode.STUDENT_NOT_FOUND, STUDENT_UUID));
   }
 
   @Test
@@ -118,11 +128,14 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
     StudentDto expectedStudent = mapper.entityToDto(studentForSave);
 
     // when
-    ResponseEntity<StudentDto> response =
-        exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, StudentDto.class);
+    ResponseEntity<Error> response =
+        exchangePostWithoutAuth(STUDENTS_URL, expectedStudent, Error.class);
 
     // then
+    System.out.println(response.getBody());
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody().getMessage()).isEqualTo(messageService.getMessage(MessageCode.STUDENT_ALREADY_EXIST,
+        expectedStudent.getFirstName(), expectedStudent.getSecondName()));
   }
 
   @Test
@@ -142,11 +155,14 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   @Test
   void testDeleteIfNotExist() {
     // when
-    ResponseEntity<StudentDto> response =
-        exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, StudentDto.class);
+    ResponseEntity<Error> response =
+        exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
 
     // then
+    System.out.println(response.getBody());
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    assertThat(response.getBody().getMessage()).isEqualTo(messageService.getMessage(MessageCode.STUDENT_NOT_DELETED,
+        STUDENT_UUID));
   }
 
   @Test
@@ -182,12 +198,15 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         StudentFixture.createDtoWithFirstAndSecondName(FIRST_NAME_MARIA, SECOND_NAME_SHARAPOVA);
 
     // when
-    ResponseEntity<StudentDto> response =
+    ResponseEntity<Error> response =
         exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID,
             studentDtoToCheck,
-            StudentDto.class);
+            Error.class);
 
     // then
+    System.out.println(response.getBody());
+    assertThat(response.getBody().getMessage()).isEqualTo(messageService.getMessage(MessageCode.STUDENT_NOT_FOUND,
+        STUDENT_UUID));
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
   }
 }
