@@ -69,7 +69,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   }
 
   @Test
-  void testGetStudentByIdIfUserNotExist() {
+  void testGetStudentByIdIfNotExist() {
     // when
     ResponseEntity<Error> response =
         exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
@@ -98,7 +98,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   }
 
   @Test
-  void testGetStudentsIfNoUsers() {
+  void testGetStudentsIfNotExist() {
     // when
     ResponseEntity<StudentDto[]> response = exchangeGetWithoutAuth(STUDENTS_URL, StudentDto[].class);
 
@@ -144,14 +144,14 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   void testDeleteStudent() {
     // given
     Student studentForSave = StudentFixture.createEntity();
-    studentRepository.save(studentForSave);
+    Student savedStudent = studentRepository.save(studentForSave);
 
     // when
     ResponseEntity<StudentDto> response =
-        exchangeDeleteWithoutAuth(STUDENTS_URL + studentForSave.getStudentId(), StudentDto.class);
+        exchangeDeleteWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 
   @Test
@@ -177,15 +177,14 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
         exchangePutWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), studentDtoForUpdate, StudentDto.class);
 
     // then
-    ResponseEntity<StudentDto> checkResponse =
-        exchangeGetWithoutAuth(STUDENTS_URL + savedStudent.getStudentId(), StudentDto.class);
+    StudentDto updatedStudent = response.getBody();
     assertSoftly(softly -> {
-      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-      softly.assertThat(checkResponse.getBody().getStudentId()).isEqualTo(savedStudent.getStudentId());
-      softly.assertThat(checkResponse.getBody().getSecondName()).isEqualTo(studentDtoForUpdate.getSecondName());
-      softly.assertThat(checkResponse.getBody().getFirstName()).isEqualTo(studentDtoForUpdate.getFirstName());
-      softly.assertThat(checkResponse.getBody().getNote()).isEqualTo(studentDtoForUpdate.getNote());
-      softly.assertThat(checkResponse.getBody().getGroup()).isEqualTo(studentDtoForUpdate.getGroup());
+      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+      softly.assertThat(updatedStudent.getStudentId()).isEqualTo(savedStudent.getStudentId());
+      softly.assertThat(updatedStudent.getSecondName()).isEqualTo(studentDtoForUpdate.getSecondName());
+      softly.assertThat(updatedStudent.getFirstName()).isEqualTo(studentDtoForUpdate.getFirstName());
+      softly.assertThat(updatedStudent.getNote()).isEqualTo(studentDtoForUpdate.getNote());
+      softly.assertThat(updatedStudent.getGroup()).isEqualTo(studentDtoForUpdate.getGroup());
     });
   }
 

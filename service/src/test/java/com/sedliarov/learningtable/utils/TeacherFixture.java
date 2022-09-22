@@ -45,9 +45,9 @@ public class TeacherFixture {
   /**
    * Method for create Teacher entity and set admin.
    */
-  public Teacher createEntityWithAdmin(boolean admin) {
+  public Teacher createEntityWithAdmin(boolean isAdmin) {
     Teacher teacher = createEntity();
-    teacher.setAdmin(admin);
+    teacher.setAdmin(isAdmin);
     return teacher;
   }
 
@@ -63,22 +63,22 @@ public class TeacherFixture {
   /**
    * Method for create Teacher entity and set first name, second name, admin.
    */
-  public Teacher createEntityWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean admin) {
+  public Teacher createEntityWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean isAdmin) {
     Teacher teacher = createEntity();
     teacher.setFirstName(firstName);
     teacher.setSecondName(secondName);
-    teacher.setAdmin(admin);
+    teacher.setAdmin(isAdmin);
     return teacher;
   }
 
   /**
    * Method for create Teacher entity and set first name, second name, adminb , group.
    */
-  public Teacher createEntityWithoutId(String firstName, String secondName, boolean admin, Group group) {
+  public Teacher createEntityWithoutId(String firstName, String secondName, boolean isAdmin, Group group) {
     Teacher teacher = createEntity();
     teacher.setFirstName(firstName);
     teacher.setSecondName(secondName);
-    teacher.setAdmin(admin);
+    teacher.setAdmin(isAdmin);
     teacher.setGroup(group);
     return teacher;
   }
@@ -109,9 +109,9 @@ public class TeacherFixture {
   /**
    * Method for create Teacher dto and set admin.
    */
-  public TeacherDto createDtoWithAdmin(boolean admin) {
+  public TeacherDto createDtoWithAdmin(boolean isAdmin) {
     TeacherDto teacherDto = createDto();
-    teacherDto.setAdmin(admin);
+    teacherDto.setAdmin(isAdmin);
     return teacherDto;
   }
 
@@ -127,22 +127,22 @@ public class TeacherFixture {
   /**
    * Method for create Teacher dto and first name, second name, admin.
    */
-  public TeacherDto createDtoWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean admin) {
+  public TeacherDto createDtoWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean isAdmin) {
     TeacherDto teacherDto = createDto();
     teacherDto.setFirstName(firstName);
     teacherDto.setSecondName(secondName);
-    teacherDto.setAdmin(admin);
+    teacherDto.setAdmin(isAdmin);
     return teacherDto;
   }
 
   /**
    * Method for create Teacher dto and first name, second name, admin, group.
    */
-  public TeacherDto createDtoWithoutId(String firstName, String secondName, boolean admin, Group group) {
+  public TeacherDto createDtoWithoutId(String firstName, String secondName, boolean isAdmin, Group group) {
     TeacherDto teacherDto = createDto();
     teacherDto.setFirstName(firstName);
     teacherDto.setSecondName(secondName);
-    teacherDto.setAdmin(admin);
+    teacherDto.setAdmin(isAdmin);
     teacherDto.setGroup(group);
     return teacherDto;
   }

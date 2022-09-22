@@ -42,7 +42,7 @@ public class GroupController {
   }
 
   @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ResponseStatus(HttpStatus.OK)
   public GroupDto updateGroup(@PathVariable UUID id, @RequestBody GroupDto groupDto) {
     return service.updateGroup(id, groupDto);
   }
@@ -54,7 +54,7 @@ public class GroupController {
   }
 
   @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteGroup(@PathVariable UUID id) {
     service.deleteGroup(id);
   }

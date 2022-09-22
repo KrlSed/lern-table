@@ -69,7 +69,7 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
   }
 
   @Test
-  void testGetTeacherByIdIfUserNotExist() {
+  void testGetTeacherByIdIfNotExist() {
     // when
     ResponseEntity<Error> response =
         exchangeGetWithoutAuth(TEACHERS_URL + TEACHER_UUID, Error.class);
@@ -98,7 +98,7 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
   }
 
   @Test
-  void testGetTeachersIfNoUsers() {
+  void testGetTeachersIfNotExist() {
     // when
     ResponseEntity<TeacherDto[]> response = exchangeGetWithoutAuth(TEACHERS_URL, TeacherDto[].class);
 
@@ -144,14 +144,14 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
   void testDeleteTeacher() {
     // given
     Teacher teacherForSave = TeacherFixture.createEntity();
-    teacherRepository.save(teacherForSave);
+    Teacher savedTeacher = teacherRepository.save(teacherForSave);
 
     // when
     ResponseEntity<TeacherDto> response =
-        exchangeDeleteWithoutAuth(TEACHERS_URL + teacherForSave.getTeacherId(), TeacherDto.class);
+        exchangeDeleteWithoutAuth(TEACHERS_URL + savedTeacher.getTeacherId(), TeacherDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
   }
 
   @Test
@@ -177,15 +177,14 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
         exchangePutWithoutAuth(TEACHERS_URL + savedTeacher.getTeacherId(), teacherDtoForUpdate, TeacherDto.class);
 
     // then
-    ResponseEntity<TeacherDto> checkResponse =
-        exchangeGetWithoutAuth(TEACHERS_URL + savedTeacher.getTeacherId(), TeacherDto.class);
+    TeacherDto updatedTeacher = response.getBody();
     assertSoftly(softly -> {
-      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
-      softly.assertThat(checkResponse.getBody().getTeacherId()).isEqualTo(savedTeacher.getTeacherId());
-      softly.assertThat(checkResponse.getBody().getSecondName()).isEqualTo(teacherDtoForUpdate.getSecondName());
-      softly.assertThat(checkResponse.getBody().getFirstName()).isEqualTo(teacherDtoForUpdate.getFirstName());
-      softly.assertThat(checkResponse.getBody().isAdmin()).isEqualTo(teacherDtoForUpdate.isAdmin());
-      softly.assertThat(checkResponse.getBody().getGroup()).isEqualTo(teacherDtoForUpdate.getGroup());
+      softly.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+      softly.assertThat(updatedTeacher.getTeacherId()).isEqualTo(savedTeacher.getTeacherId());
+      softly.assertThat(updatedTeacher.getSecondName()).isEqualTo(teacherDtoForUpdate.getSecondName());
+      softly.assertThat(updatedTeacher.getFirstName()).isEqualTo(teacherDtoForUpdate.getFirstName());
+      softly.assertThat(updatedTeacher.isAdmin()).isEqualTo(teacherDtoForUpdate.isAdmin());
+      softly.assertThat(updatedTeacher.getGroup()).isEqualTo(teacherDtoForUpdate.getGroup());
     });
   }
 

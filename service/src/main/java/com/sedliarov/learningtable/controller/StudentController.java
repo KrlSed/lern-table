@@ -43,7 +43,7 @@ public class StudentController {
   }
 
   @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ResponseStatus(HttpStatus.OK)
   public StudentDto updateStudent(@PathVariable UUID id, @Valid @RequestBody StudentDto studentDto) {
     return service.updateStudent(id, studentDto);
   }
@@ -55,7 +55,7 @@ public class StudentController {
   }
 
   @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteStudent(@PathVariable UUID id) {
     service.deleteStudent(id);
   }

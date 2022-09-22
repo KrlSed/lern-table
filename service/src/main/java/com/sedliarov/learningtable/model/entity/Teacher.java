@@ -21,7 +21,8 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "teachers",
-    uniqueConstraints = @UniqueConstraint(name = "UniqueFirstAndSecondName", columnNames = {"firstName", "secondName"}))
+    uniqueConstraints = @UniqueConstraint(name = "TeacherUniqueFirstAndSecondName", columnNames = {"firstName",
+        "secondName"}))
 @Getter
 @Setter
 @AllArgsConstructor
