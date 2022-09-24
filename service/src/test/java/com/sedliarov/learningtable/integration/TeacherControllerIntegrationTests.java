@@ -155,7 +155,7 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
   }
 
   @Test
-  void testDeleteIfNotExist() {
+  void testDeleteTeacherIfNotExist() {
     // when
     ResponseEntity<Error> response =
         exchangeDeleteWithoutAuth(TEACHERS_URL + TEACHER_UUID, Error.class);

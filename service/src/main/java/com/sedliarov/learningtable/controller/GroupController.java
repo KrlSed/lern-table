@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
+import javax.validation.Valid;
 
 /**
  * REST controller for {@link GroupDto}.
@@ -31,7 +32,7 @@ public class GroupController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public GroupDto createGroup(@RequestBody GroupDto groupDto) {
+  public GroupDto createGroup(@Valid @RequestBody GroupDto groupDto) {
     return service.createGroup(groupDto);
   }
 
@@ -43,7 +44,7 @@ public class GroupController {
 
   @PutMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public GroupDto updateGroup(@PathVariable UUID id, @RequestBody GroupDto groupDto) {
+  public GroupDto updateGroup(@PathVariable UUID id, @Valid @RequestBody GroupDto groupDto) {
     return service.updateGroup(id, groupDto);
   }
 

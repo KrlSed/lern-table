@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -32,6 +33,7 @@ public class Group {
   @GeneratedValue
   private UUID groupId;
 
+  @Column(nullable = false, unique = true)
   private String name;
 
   @OneToOne
