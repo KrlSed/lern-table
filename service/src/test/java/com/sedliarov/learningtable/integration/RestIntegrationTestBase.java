@@ -4,6 +4,7 @@ import com.sedliarov.learningtable.repository.GroupRepository;
 import com.sedliarov.learningtable.repository.StudentRepository;
 import com.sedliarov.learningtable.repository.TeacherRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -24,6 +25,7 @@ import java.util.Collections;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
+@Tag("integration")
 public class RestIntegrationTestBase {
 
   @Autowired
