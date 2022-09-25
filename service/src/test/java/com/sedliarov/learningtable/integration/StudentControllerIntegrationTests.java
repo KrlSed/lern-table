@@ -36,7 +36,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String NOT_CREATED_BECAUSE_ALREADY_EXIST = " not created because already exist";
 
-  private static final UUID STUDENT_UUID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
+  private static final UUID NOT_EXISTING_STUDENT_ID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
 
   private static final String FIRST_NAME_ARIA = "Aria";
 
@@ -72,12 +72,12 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   void testGetStudentByIdIfNotExist() {
     // when
     ResponseEntity<Error> response =
-        exchangeGetWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
+        exchangeGetWithoutAuth(STUDENTS_URL + NOT_EXISTING_STUDENT_ID, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX + STUDENT_WITH_ID
-        + STUDENT_UUID + NOT_FOUND);
+        + NOT_EXISTING_STUDENT_ID + NOT_FOUND);
   }
 
   @Test
@@ -158,11 +158,11 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
   void testDeleteStudentIfNotExist() {
     // when
     ResponseEntity<Error> response =
-        exchangeDeleteWithoutAuth(STUDENTS_URL + STUDENT_UUID, Error.class);
+        exchangeDeleteWithoutAuth(STUDENTS_URL + NOT_EXISTING_STUDENT_ID, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
+    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + NOT_EXISTING_STUDENT_ID + NOT_FOUND);
   }
 
   @Test
@@ -196,10 +196,10 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<Error> response =
-        exchangePutWithoutAuth(STUDENTS_URL + STUDENT_UUID, studentDtoToCheck, Error.class);
+        exchangePutWithoutAuth(STUDENTS_URL + NOT_EXISTING_STUDENT_ID, studentDtoToCheck, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + STUDENT_UUID + NOT_FOUND);
+    assertThat(response.getBody().getMessage()).isEqualTo(STUDENT_WITH_ID + NOT_EXISTING_STUDENT_ID + NOT_FOUND);
   }
 }

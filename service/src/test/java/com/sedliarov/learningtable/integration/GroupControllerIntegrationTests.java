@@ -36,7 +36,7 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final String NOT_CREATED_BECAUSE_ALREADY_EXIST = " not created because already exist";
 
-  private static final UUID GROUP_UUID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
+  private static final UUID NOT_EXISTING_GROUP_ID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
 
   private static final String NAME_022222 = "022222";
 
@@ -68,12 +68,12 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
   void testGetGroupByIdIfNotExist() {
     // when
     ResponseEntity<Error> response =
-        exchangeGetWithoutAuth(GROUPS_URL + GROUP_UUID, Error.class);
+        exchangeGetWithoutAuth(GROUPS_URL + NOT_EXISTING_GROUP_ID, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     assertThat(response.getBody().getMessage()).isEqualTo(NOT_FOUND_PREFIX + GROUP_WITH_ID
-        + GROUP_UUID + NOT_FOUND);
+        + NOT_EXISTING_GROUP_ID + NOT_FOUND);
   }
 
   @Test
@@ -153,11 +153,11 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
   void testDeleteGroupIfNotExist() {
     // when
     ResponseEntity<Error> response =
-        exchangeDeleteWithoutAuth(GROUPS_URL + GROUP_UUID, Error.class);
+        exchangeDeleteWithoutAuth(GROUPS_URL + NOT_EXISTING_GROUP_ID, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    assertThat(response.getBody().getMessage()).isEqualTo(GROUP_WITH_ID + GROUP_UUID + NOT_FOUND);
+    assertThat(response.getBody().getMessage()).isEqualTo(GROUP_WITH_ID + NOT_EXISTING_GROUP_ID + NOT_FOUND);
   }
 
   @Test
@@ -188,10 +188,10 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
 
     // when
     ResponseEntity<Error> response =
-        exchangePutWithoutAuth(GROUPS_URL + GROUP_UUID, groupDtoToCheck, Error.class);
+        exchangePutWithoutAuth(GROUPS_URL + NOT_EXISTING_GROUP_ID, groupDtoToCheck, Error.class);
 
     // then
     assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
-    assertThat(response.getBody().getMessage()).isEqualTo(GROUP_WITH_ID + GROUP_UUID + NOT_FOUND);
+    assertThat(response.getBody().getMessage()).isEqualTo(GROUP_WITH_ID + NOT_EXISTING_GROUP_ID + NOT_FOUND);
   }
 }
