@@ -60,7 +60,7 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
         exchangeGetWithoutAuth(GROUPS_URL + savedGroup.getGroupId(), GroupDto.class);
 
     // then
-    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     assertThat(response.getBody()).isEqualTo(expectedGroup);
   }
 
