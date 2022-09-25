@@ -30,7 +30,17 @@ public enum MessageCode {
   /**
    * Error already exist for entity Teacher. Linking in messages.properties value error.teacher.already.exist.
    */
-  ERROR_TEACHER_ALREADY_EXIST("error.teacher.already.exist");
+  ERROR_TEACHER_ALREADY_EXIST("error.teacher.already.exist"),
+
+  /**
+   * Error not found for entity Group. Linking in messages.properties value error.teacher.not.found.
+   */
+  ERROR_GROUP_NOT_FOUND("error.group.not.found"),
+
+  /**
+   * Error already exist for entity Group. Linking in messages.properties value error.teacher.already.exist.
+   */
+  ERROR_GROUP_ALREADY_EXIST("error.group.already.exist");
 
   private final String message;
 
