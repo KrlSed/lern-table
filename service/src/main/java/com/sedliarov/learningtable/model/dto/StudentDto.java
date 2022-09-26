@@ -1,6 +1,5 @@
 package com.sedliarov.learningtable.model.dto;
 
-import com.sedliarov.learningtable.model.entity.Group;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import javax.validation.constraints.NotNull;
 /**
  * This object is student DTO.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Data
 @AllArgsConstructor
@@ -28,6 +27,4 @@ public class StudentDto implements Serializable {
   private String secondName;
 
   private Double note;
-
-  private Group group;
 }

@@ -23,6 +23,7 @@
     <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
     <checkstyle.version>10.0</checkstyle.version>
     <assertj.version>3.23.0</assertj.version>
+    <flyway-core.version>9.3.1</flyway-core.version>
 
     <!-- Separate options to skip unit and integration tests -->
     <skipTests>false</skipTests>
@@ -46,6 +47,11 @@
     <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
     <maven-site-plugin.version>3.9.1</maven-site-plugin.version>
     <maven-project-info-reports-plugin.version>3.1.2</maven-project-info-reports-plugin.version>
+
+    <flyway-maven-plugin.version>9.3.1</flyway-maven-plugin.version>
+    <flyway.user>databaseUser</flyway.user>
+    <flyway.password>databasePassword</flyway.password>
+    <flyway.schemas>schemaName</flyway.schemas>
   </properties>
 
   <dependencyManagement>
@@ -74,6 +80,11 @@
         <groupId>org.assertj</groupId>
         <artifactId>assertj-core</artifactId>
         <version>${assertj.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>${flyway-core.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -131,6 +142,11 @@
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
     </dependency>
   </dependencies>
 
@@ -249,6 +265,11 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>${maven-project-info-reports-plugin.version}</version>
         </plugin>
+        <plugin>
+          <groupId>org.flywaydb</groupId>
+          <artifactId>flyway-maven-plugin</artifactId>
+          <version>${flyway-maven-plugin.version}</version>
+        </plugin>
       </plugins>
     </pluginManagement>
 
@@ -322,6 +343,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
+      </plugin>
+
+      <!-- Flyway plugin -->
+      <plugin>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-maven-plugin</artifactId>
       </plugin>
     </plugins>
   </build>

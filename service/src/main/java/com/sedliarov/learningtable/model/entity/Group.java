@@ -33,13 +33,14 @@ public class Group {
   @GeneratedValue
   private UUID groupId;
 
-  @Column(nullable = false, unique = true)
+  @Column
   private String name;
 
   @OneToOne
   @JoinColumn(name = "teacher_id")
   private Teacher teacher;
 
-  @OneToMany(mappedBy = "group")
+  @OneToMany
+  @JoinColumn(name = "student_id")
   private Set<Student> students;
 }

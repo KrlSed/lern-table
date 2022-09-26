@@ -38,9 +38,9 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
 
   private static final UUID NOT_EXISTING_GROUP_ID = UUID.fromString("3e1e6d16-451b-4748-b6a0-8f4a84a0a53a");
 
-  private static final String NAME_022222 = "022222";
+  private static final String NAME_022222 = "0222222";
 
-  private static final String NAME_011111 = "011111";
+  private static final String NAME_011111 = "0111111";
 
   @Autowired
   private GroupRepository groupRepository;
