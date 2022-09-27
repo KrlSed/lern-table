@@ -5,6 +5,7 @@ CREATE TABLE groups (
     PRIMARY KEY (group_id)
 );
 
+
 CREATE TABLE students (
     student_id UUID NOT NULL,
     first_name VARCHAR(255) NOT NULL,
@@ -22,7 +23,6 @@ CREATE TABLE teachers (
     second_name VARCHAR(255) NOT NULL,
     PRIMARY KEY (teacher_id)
 );
-
 
 
 ALTER TABLE IF EXISTS groups ADD CONSTRAINT uk_group_name UNIQUE (name);

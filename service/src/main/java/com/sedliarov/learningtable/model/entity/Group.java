@@ -1,5 +1,6 @@
 package com.sedliarov.learningtable.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,17 +32,18 @@ import javax.persistence.Table;
 public class Group {
 
   @Id
-  @Column(name = "group_id")
   @GeneratedValue
   private UUID groupId;
 
   @Column
   private String name;
 
+  @JsonIgnore
   @OneToOne
   @JoinColumn(name = "teacher_id")
   private Teacher teacher;
 
-  @OneToMany(mappedBy = "group")
+  @JsonIgnore
+  @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST, orphanRemoval = true)
   private Set<Student> students;
 }

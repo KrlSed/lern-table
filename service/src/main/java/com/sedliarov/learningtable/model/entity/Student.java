@@ -1,11 +1,13 @@
 package com.sedliarov.learningtable.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,6 +44,7 @@ public class Student {
 
   private Double note;
 
+  @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "group_id")
   private Group group;

@@ -54,9 +54,9 @@ public class RestIntegrationTestBase {
    */
 
   public void clearDataBase() {
-    studentRepository.deleteAll();
     teacherRepository.deleteAll();
     groupRepository.deleteAll();
+    studentRepository.deleteAll();
   }
 
   protected <T> ResponseEntity<T> exchangeGetWithoutAuth(String url, Class<T> responseType) {
