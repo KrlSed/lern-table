@@ -30,6 +30,7 @@ import javax.persistence.Table;
 public class Group {
 
   @Id
+  @Column(name = "group_id")
   @GeneratedValue
   private UUID groupId;
 
@@ -40,7 +41,6 @@ public class Group {
   @JoinColumn(name = "teacher_id")
   private Teacher teacher;
 
-  @OneToMany
-  @JoinColumn(name = "student_id")
+  @OneToMany(mappedBy = "group")
   private Set<Student> students;
 }

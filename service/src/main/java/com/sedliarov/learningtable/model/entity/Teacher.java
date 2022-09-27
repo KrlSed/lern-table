@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -20,7 +21,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "teachers",
-    uniqueConstraints = @UniqueConstraint(name = "teacher_unique_first_and_second_name", columnNames = {"firstName",
+    uniqueConstraints = @UniqueConstraint(name = "TeacherUniqueFirstAndSecondName", columnNames = {"firstName",
         "secondName"}))
 @Getter
 @Setter
@@ -30,6 +31,7 @@ public class Teacher {
 
   @Id
   @GeneratedValue
+  @Column(name = "teacher_id")
   private UUID teacherId;
 
   @Column(nullable = false)
@@ -39,4 +41,7 @@ public class Teacher {
   private String secondName;
 
   private boolean isAdmin;
+
+  @OneToOne(mappedBy = "teacher")
+  private Group group;
 }
