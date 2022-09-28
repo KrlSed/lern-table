@@ -1,6 +1,6 @@
 package com.sedliarov.learningtable.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +43,7 @@ public class Student {
 
   private Double note;
 
-  @JsonIgnore
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "group_id")
   private Group group;

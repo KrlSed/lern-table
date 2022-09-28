@@ -1,6 +1,6 @@
 package com.sedliarov.learningtable.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +43,7 @@ public class Teacher {
 
   private boolean isAdmin;
 
-  @JsonIgnore
+  @JsonBackReference
   @OneToOne(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
   private Group group;
 }

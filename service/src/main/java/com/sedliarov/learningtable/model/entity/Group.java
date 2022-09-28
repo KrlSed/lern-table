@@ -1,6 +1,6 @@
 package com.sedliarov.learningtable.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,15 +35,15 @@ public class Group {
   @GeneratedValue
   private UUID groupId;
 
-  @Column
+  @Column(nullable = false, unique = true)
   private String name;
 
-  @JsonIgnore
+  @JsonManagedReference
   @OneToOne
   @JoinColumn(name = "teacher_id")
   private Teacher teacher;
 
-  @JsonIgnore
+  @JsonManagedReference
   @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Student> students;
 }
