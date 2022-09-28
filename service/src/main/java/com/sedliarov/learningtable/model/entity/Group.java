@@ -44,6 +44,6 @@ public class Group {
   private Teacher teacher;
 
   @JsonIgnore
-  @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST, orphanRemoval = true)
+  @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
   private Set<Student> students;
 }

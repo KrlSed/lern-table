@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * This object is group DTO.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Data
 @AllArgsConstructor
