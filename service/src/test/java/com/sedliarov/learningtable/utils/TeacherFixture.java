@@ -1,7 +1,6 @@
 package com.sedliarov.learningtable.utils;
 
 import com.sedliarov.learningtable.model.dto.TeacherDto;
-import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.model.entity.Teacher;
 import lombok.experimental.UtilityClass;
 
