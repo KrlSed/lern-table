@@ -177,7 +177,7 @@ public class GroupControllerIntegrationTests extends RestIntegrationTestBase {
       softly.assertThat(updatedGroup.getGroupId()).isEqualTo(savedGroup.getGroupId());
       softly.assertThat(updatedGroup.getName()).isEqualTo(groupDtoForUpdate.getName());
       softly.assertThat(updatedGroup.getTeacherId()).isEqualTo(groupDtoForUpdate.getTeacherId());
-      softly.assertThat(updatedGroup.getStudents()).isEqualTo(groupDtoForUpdate.getStudents());
+      softly.assertThat(updatedGroup.getStudentId()).isEqualTo(groupDtoForUpdate.getStudentId());
     });
   }
 
