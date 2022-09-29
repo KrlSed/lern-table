@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -39,6 +41,7 @@ public class Group {
   private UUID teacherId;
 
   @ElementCollection(targetClass = UUID.class)
-  @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "group_id"))
-  private Set<UUID> studentId;
+  @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "groupId"))
+  @Column(name = "studentId")
+  private Set<UUID> studentIds;
 }

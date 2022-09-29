@@ -56,7 +56,7 @@ public class GroupFixture {
    */
   public Group createEntityWithStudents(Set<UUID> students) {
     Group group = createEntity();
-    group.setStudentId(students);
+    group.setStudentIds(students);
     return group;
   }
 
@@ -76,7 +76,7 @@ public class GroupFixture {
   public Group createEntityWithNameAndStudents(String name, Set<UUID> students) {
     Group group = createEntity();
     group.setName(name);
-    group.setStudentId(students);
+    group.setStudentIds(students);
     return group;
   }
 
@@ -87,7 +87,7 @@ public class GroupFixture {
     Group group = createEntity();
     group.setName(name);
     group.setTeacherId(teacher);
-    group.setStudentId(students);
+    group.setStudentIds(students);
     return group;
   }
 
@@ -127,7 +127,7 @@ public class GroupFixture {
    */
   public GroupDto createDtoWithStudents(Set<UUID> students) {
     GroupDto groupDto = createDto();
-    groupDto.setStudentId(students);
+    groupDto.setStudentIds(students);
     return groupDto;
   }
 
@@ -147,7 +147,7 @@ public class GroupFixture {
   public GroupDto createDtoWithNameAndStudents(String name, Set<UUID> students) {
     GroupDto groupDto = createDto();
     groupDto.setName(name);
-    groupDto.setStudentId(students);
+    groupDto.setStudentIds(students);
     return groupDto;
   }
 
@@ -158,7 +158,7 @@ public class GroupFixture {
     GroupDto groupDto = createDto();
     groupDto.setName(name);
     groupDto.setTeacherId(teacher);
-    groupDto.setStudentId(students);
+    groupDto.setStudentIds(students);
     return groupDto;
   }
 }

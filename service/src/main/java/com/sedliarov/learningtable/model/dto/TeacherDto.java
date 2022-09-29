@@ -24,4 +24,6 @@ public class TeacherDto implements Serializable {
   private String secondName;
 
   private boolean isAdmin;
+
+  private UUID groupId;
 }

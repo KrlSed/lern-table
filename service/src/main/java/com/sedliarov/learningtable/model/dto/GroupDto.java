@@ -24,5 +24,5 @@ public class GroupDto implements Serializable {
 
   private UUID teacherId;
 
-  private Set<UUID> studentId;
+  private Set<UUID> studentIds;
 }

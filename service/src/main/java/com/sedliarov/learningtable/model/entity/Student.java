@@ -39,6 +39,5 @@ public class Student {
 
   private Double note;
 
-  @Column(name = "group_id")
   private UUID groupId;
 }

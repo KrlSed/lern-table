@@ -1,9 +1,9 @@
-INSERT INTO teachers (teacher_id, first_name, is_admin, second_name) VALUES
-    ('0fd55bec-4579-475b-900c-347ec2425e65', 'Valeriy', TRUE, 'Tarkovsky'),
-    ('5fd7b730-1baa-49b9-88fc-22508166776f', 'Kirill', FALSE, 'Bulgakov'),
-    ('35301d93-b3c4-4c64-9f6a-51642fdff1fd', 'Nikita', TRUE, 'Durov'),
-    ('a9ca27f0-a699-49d7-8730-6c83590bd2ef', 'Kirill', TRUE, 'Aivazovsky'),
-    ('90d81dea-0f50-41eb-88c1-f104053d3f19', 'Anastasia', FALSE, 'Kuri');
+INSERT INTO teachers (teacher_id, first_name, is_admin, second_name, group_id) VALUES
+    ('0fd55bec-4579-475b-900c-347ec2425e65', 'Valeriy', TRUE, 'Tarkovsky', '6f9b81b3-1e78-4e51-8826-2d7e0d019e55'),
+    ('5fd7b730-1baa-49b9-88fc-22508166776f', 'Kirill', FALSE, 'Bulgakov', '56efc886-b4f3-492c-aac5-a49c830728f2'),
+    ('35301d93-b3c4-4c64-9f6a-51642fdff1fd', 'Nikita', TRUE, 'Durov', '140e9a5f-64b1-4016-bdba-ae278b73342f'),
+    ('a9ca27f0-a699-49d7-8730-6c83590bd2ef', 'Kirill', TRUE, 'Aivazovsky', '1bbca5f5-15b8-49d5-b337-3cd066489cf2'),
+    ('90d81dea-0f50-41eb-88c1-f104053d3f19', 'Anastasia', FALSE, 'Kuri', '195228ff-164e-4f7c-82fa-5e8e739eae6a');
 
 INSERT INTO groups (group_id, name, teacher_id) VALUES
     ('6f9b81b3-1e78-4e51-8826-2d7e0d019e55', '0000001', '0fd55bec-4579-475b-900c-347ec2425e65'),
