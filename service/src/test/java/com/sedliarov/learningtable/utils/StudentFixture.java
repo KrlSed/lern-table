@@ -1,7 +1,6 @@
 package com.sedliarov.learningtable.utils;
 
 import com.sedliarov.learningtable.model.dto.StudentDto;
-import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.model.entity.Student;
 import lombok.experimental.UtilityClass;
 
@@ -10,7 +9,7 @@ import java.util.UUID;
 /**
  * Student dto and entity fast object constructor.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @UtilityClass
 public class StudentFixture {
@@ -55,9 +54,9 @@ public class StudentFixture {
   /**
    * Method for create Student entity and set group.
    */
-  public Student createEntityWithGroup(Group group) {
+  public Student createEntityWithGroup(UUID group) {
     Student student = createEntity();
-    student.setGroup(group);
+    student.setGroupId(group);
     return student;
   }
 
@@ -75,12 +74,12 @@ public class StudentFixture {
   /**
    * Method for create Student entity and set first name, second name, note, group.
    */
-  public Student createEntityWithoutId(String firstName, String secondName, Double note, Group group) {
+  public Student createEntityWithoutId(String firstName, String secondName, Double note, UUID group) {
     Student student = createEntity();
     student.setFirstName(firstName);
     student.setSecondName(secondName);
     student.setNote(note);
-    student.setGroup(group);
+    student.setGroupId(group);
     return student;
   }
 
@@ -119,9 +118,9 @@ public class StudentFixture {
   /**
    * Method for create Student dto and set group.
    */
-  public StudentDto createDtoWithGroup(Group group) {
+  public StudentDto createDtoWithGroup(UUID group) {
     StudentDto studentDto = createDto();
-    studentDto.setGroup(group);
+    studentDto.setGroupId(group);
     return studentDto;
   }
 
@@ -139,12 +138,12 @@ public class StudentFixture {
   /**
    * Method for create Student dto and first name, second name, note, group.
    */
-  public StudentDto createDtoWithoutId(String firstName, String secondName, Double note, Group group) {
+  public StudentDto createDtoWithoutId(String firstName, String secondName, Double note, UUID group) {
     StudentDto studentDto = createDto();
     studentDto.setFirstName(firstName);
     studentDto.setSecondName(secondName);
     studentDto.setNote(note);
-    studentDto.setGroup(group);
+    studentDto.setGroupId(group);
     return studentDto;
   }
 }

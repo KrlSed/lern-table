@@ -1,6 +1,5 @@
 package com.sedliarov.learningtable.model.dto;
 
-import com.sedliarov.learningtable.model.entity.Group;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +24,4 @@ public class TeacherDto implements Serializable {
   private String secondName;
 
   private boolean isAdmin;
-
-  private Group group;
 }

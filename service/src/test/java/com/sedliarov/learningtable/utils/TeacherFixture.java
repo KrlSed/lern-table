@@ -1,7 +1,6 @@
 package com.sedliarov.learningtable.utils;
 
 import com.sedliarov.learningtable.model.dto.TeacherDto;
-import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.model.entity.Teacher;
 import lombok.experimental.UtilityClass;
 
@@ -20,7 +19,7 @@ public class TeacherFixture {
   private static final boolean ADMIN = false;
 
   public Teacher createEntity() {
-    return new Teacher(null, FIRST_NAME, SECOND_NAME, ADMIN, null);
+    return new Teacher(null, FIRST_NAME, SECOND_NAME, ADMIN);
   }
 
   /**
@@ -52,15 +51,6 @@ public class TeacherFixture {
   }
 
   /**
-   * Method for create Teacher entity and set group.
-   */
-  public Teacher createEntityWithGroup(Group group) {
-    Teacher teacher = createEntity();
-    teacher.setGroup(group);
-    return teacher;
-  }
-
-  /**
    * Method for create Teacher entity and set first name, second name, admin.
    */
   public Teacher createEntityWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean isAdmin) {
@@ -74,17 +64,16 @@ public class TeacherFixture {
   /**
    * Method for create Teacher entity and set first name, second name, adminb , group.
    */
-  public Teacher createEntityWithoutId(String firstName, String secondName, boolean isAdmin, Group group) {
+  public Teacher createEntityWithoutId(String firstName, String secondName, boolean isAdmin) {
     Teacher teacher = createEntity();
     teacher.setFirstName(firstName);
     teacher.setSecondName(secondName);
     teacher.setAdmin(isAdmin);
-    teacher.setGroup(group);
     return teacher;
   }
 
   public TeacherDto createDto() {
-    return new TeacherDto(null, FIRST_NAME, SECOND_NAME, ADMIN, null);
+    return new TeacherDto(null, FIRST_NAME, SECOND_NAME, ADMIN);
   }
 
   /**
@@ -116,15 +105,6 @@ public class TeacherFixture {
   }
 
   /**
-   * Method for create Teacher dto and set group.
-   */
-  public TeacherDto createDtoWithGroup(Group group) {
-    TeacherDto teacherDto = createDto();
-    teacherDto.setGroup(group);
-    return teacherDto;
-  }
-
-  /**
    * Method for create Teacher dto and first name, second name, admin.
    */
   public TeacherDto createDtoWithFirstAndSecondNameAndAdmin(String firstName, String secondName, boolean isAdmin) {
@@ -138,12 +118,11 @@ public class TeacherFixture {
   /**
    * Method for create Teacher dto and first name, second name, admin, group.
    */
-  public TeacherDto createDtoWithoutId(String firstName, String secondName, boolean isAdmin, Group group) {
+  public TeacherDto createDtoWithoutId(String firstName, String secondName, boolean isAdmin) {
     TeacherDto teacherDto = createDto();
     teacherDto.setFirstName(firstName);
     teacherDto.setSecondName(secondName);
     teacherDto.setAdmin(isAdmin);
-    teacherDto.setGroup(group);
     return teacherDto;
   }
 }

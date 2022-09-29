@@ -1,6 +1,5 @@
 package com.sedliarov.learningtable.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,14 +7,13 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -38,12 +36,9 @@ public class Group {
   @Column(nullable = false, unique = true)
   private String name;
 
-  @JsonManagedReference
-  @OneToOne
-  @JoinColumn(name = "teacher_id")
-  private Teacher teacher;
+  private UUID teacherId;
 
-  @JsonManagedReference
-  @OneToMany(mappedBy = "group", cascade = CascadeType.ALL, orphanRemoval = true)
-  private Set<Student> students;
+  @ElementCollection(targetClass = UUID.class)
+  @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "group_id"))
+  private Set<UUID> studentId;
 }

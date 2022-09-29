@@ -1,7 +1,5 @@
 package com.sedliarov.learningtable.model.dto;
 
-import com.sedliarov.learningtable.model.entity.Student;
-import com.sedliarov.learningtable.model.entity.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +22,7 @@ public class GroupDto implements Serializable {
 
   private String name;
 
-  private Teacher teacher;
+  private UUID teacherId;
 
-  private Set<Student> students;
+  private Set<UUID> studentId;
 }
