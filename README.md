@@ -14,6 +14,7 @@ on Java 17 and Maven.
             - Lombok
             - Testcontainers
                 - Postgres SQL
+            - Flyway
             - Mapstruct
             - Checkstyle
             - Assertj
