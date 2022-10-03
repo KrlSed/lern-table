@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.UUID;
 import javax.persistence.Column;
@@ -39,5 +41,6 @@ public class Student {
 
   private Double note;
 
+  @Fetch(FetchMode.SELECT)
   private UUID groupId;
 }
