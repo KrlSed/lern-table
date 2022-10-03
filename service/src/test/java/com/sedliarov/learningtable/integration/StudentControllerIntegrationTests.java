@@ -184,7 +184,7 @@ public class StudentControllerIntegrationTests extends RestIntegrationTestBase {
       softly.assertThat(updatedStudent.getSecondName()).isEqualTo(studentDtoForUpdate.getSecondName());
       softly.assertThat(updatedStudent.getFirstName()).isEqualTo(studentDtoForUpdate.getFirstName());
       softly.assertThat(updatedStudent.getNote()).isEqualTo(studentDtoForUpdate.getNote());
-      softly.assertThat(updatedStudent.getGroup()).isEqualTo(studentDtoForUpdate.getGroup());
+      softly.assertThat(updatedStudent.getGroupId()).isEqualTo(studentDtoForUpdate.getGroupId());
     });
   }
 

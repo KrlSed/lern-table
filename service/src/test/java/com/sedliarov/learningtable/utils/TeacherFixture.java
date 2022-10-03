@@ -1,7 +1,6 @@
 package com.sedliarov.learningtable.utils;
 
 import com.sedliarov.learningtable.model.dto.TeacherDto;
-import com.sedliarov.learningtable.model.entity.Group;
 import com.sedliarov.learningtable.model.entity.Teacher;
 import lombok.experimental.UtilityClass;
 
@@ -54,9 +53,9 @@ public class TeacherFixture {
   /**
    * Method for create Teacher entity and set group.
    */
-  public Teacher createEntityWithGroup(Group group) {
+  public Teacher createEntityWithGroup(UUID group) {
     Teacher teacher = createEntity();
-    teacher.setGroup(group);
+    teacher.setGroupId(group);
     return teacher;
   }
 
@@ -74,12 +73,12 @@ public class TeacherFixture {
   /**
    * Method for create Teacher entity and set first name, second name, adminb , group.
    */
-  public Teacher createEntityWithoutId(String firstName, String secondName, boolean isAdmin, Group group) {
+  public Teacher createEntityWithoutId(String firstName, String secondName, boolean isAdmin, UUID group) {
     Teacher teacher = createEntity();
     teacher.setFirstName(firstName);
     teacher.setSecondName(secondName);
     teacher.setAdmin(isAdmin);
-    teacher.setGroup(group);
+    teacher.setGroupId(group);
     return teacher;
   }
 
@@ -118,9 +117,9 @@ public class TeacherFixture {
   /**
    * Method for create Teacher dto and set group.
    */
-  public TeacherDto createDtoWithGroup(Group group) {
+  public TeacherDto createDtoWithGroup(UUID group) {
     TeacherDto teacherDto = createDto();
-    teacherDto.setGroup(group);
+    teacherDto.setGroupId(group);
     return teacherDto;
   }
 
@@ -138,12 +137,12 @@ public class TeacherFixture {
   /**
    * Method for create Teacher dto and first name, second name, admin, group.
    */
-  public TeacherDto createDtoWithoutId(String firstName, String secondName, boolean isAdmin, Group group) {
+  public TeacherDto createDtoWithoutId(String firstName, String secondName, boolean isAdmin, UUID group) {
     TeacherDto teacherDto = createDto();
     teacherDto.setFirstName(firstName);
     teacherDto.setSecondName(secondName);
     teacherDto.setAdmin(isAdmin);
-    teacherDto.setGroup(group);
+    teacherDto.setGroupId(group);
     return teacherDto;
   }
 }

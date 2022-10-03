@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -41,6 +40,5 @@ public class Teacher {
 
   private boolean isAdmin;
 
-  @OneToOne(mappedBy = "teacher")
-  private Group group;
+  private UUID groupId;
 }

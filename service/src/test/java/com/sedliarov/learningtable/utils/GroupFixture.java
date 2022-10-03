@@ -2,8 +2,6 @@ package com.sedliarov.learningtable.utils;
 
 import com.sedliarov.learningtable.model.dto.GroupDto;
 import com.sedliarov.learningtable.model.entity.Group;
-import com.sedliarov.learningtable.model.entity.Student;
-import com.sedliarov.learningtable.model.entity.Teacher;
 import lombok.experimental.UtilityClass;
 
 import java.util.Collections;
@@ -20,7 +18,7 @@ public class GroupFixture {
 
   private static final String NAME = "0000000";
 
-  private static final Set<Student> EMPTY_SET = Collections.<Student>emptySet();
+  private static final Set<UUID> EMPTY_SET = Collections.emptySet();
 
   public Group createEntity() {
     return new Group(null, NAME, null, EMPTY_SET);
@@ -47,49 +45,49 @@ public class GroupFixture {
   /**
    * Method for create Group entity and set teacher.
    */
-  public Group createEntityWithTeacher(Teacher teacher) {
+  public Group createEntityWithTeacher(UUID teacherId) {
     Group group = createEntity();
-    group.setTeacher(teacher);
+    group.setTeacherId(teacherId);
     return group;
   }
 
   /**
    * Method for create Group entity and set students.
    */
-  public Group createEntityWithStudents(Set<Student> students) {
+  public Group createEntityWithStudents(Set<UUID> studentIds) {
     Group group = createEntity();
-    group.setStudents(students);
+    group.setStudentIds(studentIds);
     return group;
   }
 
   /**
    * Method for create Group entity and set name and teacher.
    */
-  public Group createEntityWithNameAndTeacher(String name, Teacher teacher) {
+  public Group createEntityWithNameAndTeacher(String name, UUID teacherId) {
     Group group = createEntity();
     group.setName(name);
-    group.setTeacher(teacher);
+    group.setTeacherId(teacherId);
     return group;
   }
 
   /**
    * Method for create Group entity and set name and students.
    */
-  public Group createEntityWithNameAndStudents(String name, Set<Student> students) {
+  public Group createEntityWithNameAndStudents(String name, Set<UUID> studentIds) {
     Group group = createEntity();
     group.setName(name);
-    group.setStudents(students);
+    group.setStudentIds(studentIds);
     return group;
   }
 
   /**
    * Method for create Group entity and set first name, second name, admin, group.
    */
-  public Group createEntityWithoutId(String name, Teacher teacher, Set<Student> students) {
+  public Group createEntityWithoutId(String name, UUID teacherId, Set<UUID> studentIds) {
     Group group = createEntity();
     group.setName(name);
-    group.setTeacher(teacher);
-    group.setStudents(students);
+    group.setTeacherId(teacherId);
+    group.setStudentIds(studentIds);
     return group;
   }
 
@@ -118,49 +116,49 @@ public class GroupFixture {
   /**
    * Method for create Group dto and set teacher.
    */
-  public GroupDto createDtoWithTeacher(Teacher teacher) {
+  public GroupDto createDtoWithTeacher(UUID teacherId) {
     GroupDto groupDto = createDto();
-    groupDto.setTeacher(teacher);
+    groupDto.setTeacherId(teacherId);
     return groupDto;
   }
 
   /**
    * Method for create Group dto and set students.
    */
-  public GroupDto createDtoWithStudents(Set<Student> students) {
+  public GroupDto createDtoWithStudents(Set<UUID> studentIds) {
     GroupDto groupDto = createDto();
-    groupDto.setStudents(students);
+    groupDto.setStudentIds(studentIds);
     return groupDto;
   }
 
   /**
    * Method for create Group dto and set name and teacher.
    */
-  public GroupDto createDtoWithNameAndTeacher(String name, Teacher teacher) {
+  public GroupDto createDtoWithNameAndTeacher(String name, UUID teacherId) {
     GroupDto groupDto = createDto();
     groupDto.setName(name);
-    groupDto.setTeacher(teacher);
+    groupDto.setTeacherId(teacherId);
     return groupDto;
   }
 
   /**
    * Method for create Group dto and set name and students.
    */
-  public GroupDto createDtoWithNameAndStudents(String name, Set<Student> students) {
+  public GroupDto createDtoWithNameAndStudents(String name, Set<UUID> studentIds) {
     GroupDto groupDto = createDto();
     groupDto.setName(name);
-    groupDto.setStudents(students);
+    groupDto.setStudentIds(studentIds);
     return groupDto;
   }
 
   /**
    * Method for create Group dto and set first name, second name, admin, group.
    */
-  public GroupDto createDtoWithoutId(String name, Teacher teacher, Set<Student> students) {
+  public GroupDto createDtoWithoutId(String name, UUID teacherId, Set<UUID> studentIds) {
     GroupDto groupDto = createDto();
     groupDto.setName(name);
-    groupDto.setTeacher(teacher);
-    groupDto.setStudents(students);
+    groupDto.setTeacherId(teacherId);
+    groupDto.setStudentIds(studentIds);
     return groupDto;
   }
 }

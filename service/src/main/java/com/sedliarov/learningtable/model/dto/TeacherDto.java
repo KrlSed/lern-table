@@ -1,6 +1,5 @@
 package com.sedliarov.learningtable.model.dto;
 
-import com.sedliarov.learningtable.model.entity.Group;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import java.util.UUID;
 /**
  * This object is teacher DTO.
  *
- * @author  Kirill Sedliarov
+ * @author Kirill Sedliarov
  */
 @Data
 @AllArgsConstructor
@@ -26,5 +25,5 @@ public class TeacherDto implements Serializable {
 
   private boolean isAdmin;
 
-  private Group group;
+  private UUID groupId;
 }

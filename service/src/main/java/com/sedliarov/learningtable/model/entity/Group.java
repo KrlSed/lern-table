@@ -7,13 +7,13 @@ import lombok.Setter;
 
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -36,10 +36,10 @@ public class Group {
   @Column(nullable = false, unique = true)
   private String name;
 
-  @OneToOne
-  @JoinColumn(name = "teacher_id")
-  private Teacher teacher;
+  private UUID teacherId;
 
-  @OneToMany(mappedBy = "group")
-  private Set<Student> students;
+  @ElementCollection(targetClass = UUID.class)
+  @CollectionTable(name = "students", joinColumns = @JoinColumn(name = "groupId"))
+  @Column(name = "studentId")
+  private Set<UUID> studentIds;
 }
