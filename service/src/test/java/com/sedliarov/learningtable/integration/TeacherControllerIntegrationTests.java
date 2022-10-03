@@ -184,6 +184,7 @@ public class TeacherControllerIntegrationTests extends RestIntegrationTestBase {
       softly.assertThat(updatedTeacher.getSecondName()).isEqualTo(teacherDtoForUpdate.getSecondName());
       softly.assertThat(updatedTeacher.getFirstName()).isEqualTo(teacherDtoForUpdate.getFirstName());
       softly.assertThat(updatedTeacher.isAdmin()).isEqualTo(teacherDtoForUpdate.isAdmin());
+      softly.assertThat(updatedTeacher.getGroupId()).isEqualTo(teacherDtoForUpdate.getGroupId());
     });
   }
 
